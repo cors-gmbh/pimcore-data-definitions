@@ -68,7 +68,7 @@ class PrimaryKeyLoader implements LoaderInterface
                 $obj = $objectData[0];
 
                 if ($context->getDefinition()->getForceLoadObject()) {
-                    $obj = DataObject::getById($obj->getId(), true);
+                    $obj = DataObject::getById($obj->getId(), ['force' => true]);
 
                     if (!$obj instanceof $classObject) {
                         $obj = new $classObject();
