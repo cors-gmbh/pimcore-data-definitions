@@ -13,13 +13,16 @@ acme_bundle.data_definitions.my_runner:
 ```php
 namespace AcmeBundle\DataDefinitions;
 
+use Instride\Bundle\DataDefinitionsBundle\Context\RunnerContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
+
 class MyRunner implements RunnerInterface
 {
-    public function preRun(Concrete $object, $data, DefinitionInterface $definition, $params) {
+    public function preRun(RunnerContextInterface $context) {
         //gets called before the row gets imported
     }
 
-    public function postRun(Concrete $object, $data, DefinitionInterface $definition, $params) {
+    public function postRun(RunnerContextInterface $context) {
         //gets called after the row was imported
     }
 }
