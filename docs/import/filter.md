@@ -15,9 +15,10 @@ namespace AcmeBundle\DataDefinitions;
 
 class MyFilter implements FilterInterface
 {
-    public function filter($definition, $data, $object) {
-        if($data['isActive'])
-        {
+    public function filter(FilterContextInterface $context)
+    {
+        $data = $context->getDataRow();
+        if ($data['isActive']) {
             return true;            //Will be imported
         }
 
