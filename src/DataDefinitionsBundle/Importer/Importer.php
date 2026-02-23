@@ -616,9 +616,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             throw new InvalidArgumentException(sprintf('Class not found %s', $class));
         }
 
-        /**
-         * @var $loader LoaderInterface
-         */
+        /** @var LoaderInterface $loader */
         if ($definition->getLoader()) {
             $loader = $this->loaderRegistry->get($definition->getLoader());
         } else {

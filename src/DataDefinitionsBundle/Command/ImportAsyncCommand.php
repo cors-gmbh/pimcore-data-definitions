@@ -16,6 +16,7 @@ namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
 use Instride\Bundle\DataDefinitionsBundle\Importer\AsyncImporterInterface;
+use Pimcore\Model\Exception\NotFoundException;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Pimcore\Console\AbstractCommand;
@@ -74,7 +75,7 @@ final class ImportAsyncCommand extends AbstractCommand
         } catch (NotFoundException) {
         }
 
-        if (!$definition instanceof ImportDefinitionInterface) {
+        if (!isset($definition) || !$definition instanceof ImportDefinitionInterface) {
             throw new Exception(sprintf('Import Definition with ID/Name "%s" not found', $definitionId));
         }
 

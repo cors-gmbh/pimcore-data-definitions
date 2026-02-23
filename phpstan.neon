@@ -1,8 +1,12 @@
 parameters:
+    level: 3
     reportUnmatchedIgnoredErrors: false
 
+    paths:
+        - src/DataDefinitionsBundle
+
     symfony:
-        container_xml_path: var/cache/dev/KernelDevDebugContainer.xml
+        containerXmlPath: var/cache/dev/KernelDevDebugContainer.xml
 
     excludePaths:
         # Makes PHPStan crash
