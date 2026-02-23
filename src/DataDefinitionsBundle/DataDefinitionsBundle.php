@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle;
@@ -41,6 +40,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DataDefinitionsBundle extends AbstractResourceBundle
 {
+    #[\Override]
     public static function registerDependentBundles(BundleCollection $collection): void
     {
         parent::registerDependentBundles($collection);
@@ -55,6 +55,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         ], 3500);
     }
 
+    #[\Override]
     public function getSupportedDrivers(): array
     {
         return [
@@ -62,6 +63,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         ];
     }
 
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -82,6 +84,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         $container->addCompilerPass(new PersisterRegistryCompilerPass());
     }
 
+    #[\Override]
     public function getVersion(): string
     {
         if (InstalledVersions::isInstalled('instride/data-definitions')) {
@@ -91,41 +94,49 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         return '';
     }
 
+    #[\Override]
     public function getNiceName(): string
     {
         return 'Data Definitions';
     }
 
+    #[\Override]
     public function getDescription(): string
     {
         return 'Data Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';
     }
 
+    #[\Override]
     public function getInstaller(): ?InstallerInterface
     {
         return $this->container->get(Installer::class);
     }
 
+    #[\Override]
     public function getAdminIframePath(): ?string
     {
         return null;
     }
 
+    #[\Override]
     public function getJsPaths(): array
     {
         return [];
     }
 
+    #[\Override]
     public function getCssPaths(): array
     {
         return [];
     }
 
+    #[\Override]
     public function getEditmodeJsPaths(): array
     {
         return [];
     }
 
+    #[\Override]
     public function getEditmodeCssPaths(): array
     {
         return [];

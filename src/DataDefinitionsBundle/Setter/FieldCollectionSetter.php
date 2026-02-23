@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Setter;
@@ -21,8 +20,9 @@ use Instride\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Fieldcollection;
 use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
 
-class FieldCollectionSetter implements SetterInterface, GetterInterface
+final class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
+    #[\Override]
     public function set(SetterContextInterface $context): void
     {
         $keyParts = explode('~', $context->getMapping()->getToColumn());
@@ -91,6 +91,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         }
     }
 
+    #[\Override]
     public function get(GetterContextInterface $context)
     {
         $keyParts = explode('~', $context->getMapping()->getFromColumn());
@@ -135,7 +136,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         return null;
     }
 
-    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, array $data): bool
+    private function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, array $data): bool
     {
         foreach ($keys as $key) {
             $getter = sprintf('get%s', ucfirst($key['to']));

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
@@ -23,7 +22,7 @@ use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
-class JsonProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
+final class JsonProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
 {
     /**
      * @var array
@@ -46,6 +45,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $depth;
     }
 
+    #[\Override]
     public function testData(array $configuration): bool
     {
         $jsonExample = $configuration['jsonExample'];
@@ -53,6 +53,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $this->getJsonDepth(json_decode($jsonExample, true)) === 1;
     }
 
+    #[\Override]
     public function getColumns(array $configuration): array
     {
         $jsonExample = $configuration['jsonExample'];
@@ -75,6 +76,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $returnHeaders;
     }
 
+    #[\Override]
     public function getData(
         array $configuration,
         ImportDefinitionInterface $definition,
@@ -92,6 +94,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return new ArrayImportDataSet([]);
     }
 
+    #[\Override]
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         if (!array_key_exists('file', $params)) {
@@ -103,6 +106,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         file_put_contents($file, json_encode($this->exportData));
     }
 
+    #[\Override]
     public function addExportData(
         array $data,
         array $configuration,
