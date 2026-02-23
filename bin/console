@@ -1,47 +1,26 @@
 #!/usr/bin/env php
 <?php
 
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
+use Pimcore\Bootstrap;
+use Pimcore\Console\Application;
 
-ob_get_clean();
-
-if (file_exists($a = getcwd() . '/vendor/autoload.php')) {
-    include $a;
-} elseif (file_exists($a = __DIR__ . '/../../../../vendor/autoload.php')) {
-    include $a;
-} elseif (file_exists($a = __DIR__ . '/../vendor/autoload.php')) {
-    include $a;
+if (file_exists($a = getcwd() . '/vendor/autoload_runtime.php')) {
+    require_once $a;
+} elseif (file_exists($a = __DIR__ . '/../vendor/autoload_runtime.php')) {
+    require_once $a;
+} elseif (file_exists($a = __DIR__ . '/../../../../vendor/autoload_runtime.php')) {
+    require_once $a;
+} elseif (file_exists($a = __DIR__ . '/../autoload_runtime.php')) {
+    require_once $a;
 } else {
-    fwrite(STDERR, 'Cannot locate autoloader; please run "composer install"' . PHP_EOL);
-    exit(1);
+    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
 }
 
-\Pimcore\Bootstrap::setProjectRoot();
+Bootstrap::setProjectRoot();
 
 define('PIMCORE_CONSOLE', true);
 
-
-$input = new \Symfony\Component\Console\Input\ArgvInput();
-if (null !== $env = $input->getParameterOption(['--env', '-e'], null, true)) {
-    putenv('APP_ENV='.$_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = $env);
-}
-
-if ($input->hasParameterOption('--no-debug', true)) {
-    putenv('APP_DEBUG='.$_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = '0');
-}
-
-/** @var \Pimcore\Kernel $kernel */
-$kernel = \Pimcore\Bootstrap::startupCli();
-$application = new \Pimcore\Console\Application($kernel);
-$application->run();
+return function (array $context) {
+    $kernel = \Pimcore\Bootstrap::startupCli();
+    return new Application($kernel);
+};

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\DependencyInjection;
@@ -47,8 +46,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 
-class DataDefinitionsExtension extends AbstractModelExtension implements PrependExtensionInterface
+final class DataDefinitionsExtension extends AbstractModelExtension implements PrependExtensionInterface
 {
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -135,6 +135,7 @@ class DataDefinitionsExtension extends AbstractModelExtension implements Prepend
         $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
     }
 
+    #[\Override]
     public function prepend(ContainerBuilder $container): void
     {
         LocationAwareConfigRepository::loadSymfonyConfigFiles($container, 'data_definitions', 'export_definitions');

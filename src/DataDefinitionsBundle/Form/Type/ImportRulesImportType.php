@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Form\Type;
@@ -23,6 +22,7 @@ use Symfony\Component\Validator\Constraints\File;
 
 final class ImportRulesImportType extends AbstractType
 {
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -38,6 +38,7 @@ final class ImportRulesImportType extends AbstractType
         ;
     }
 
+    #[\Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('csrf_protection', false);

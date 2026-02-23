@@ -67,8 +67,8 @@ var/config
 test.csv
 web
 public
-docker-compose.yaml
 test-commands.txt
 .docker
 cache
 config/pimcore/data-definitions
+docker-compose.override.yaml

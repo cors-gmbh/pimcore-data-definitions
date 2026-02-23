@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
@@ -25,15 +24,17 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
 
-class CsvProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
+final class CsvProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
 {
     private array $exportData = [];
 
+    #[\Override]
     public function testData(array $configuration): bool
     {
         return true;
     }
 
+    #[\Override]
     public function getColumns(array $configuration): array
     {
         $csvHeaders = (string) $configuration['csvHeaders'];
@@ -69,6 +70,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
+    #[\Override]
     public function getData(
         array $configuration,
         ImportDefinitionInterface $definition,
@@ -122,6 +124,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return new TraversableImportDataSet($records);
     }
 
+    #[\Override]
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         if (!array_key_exists('file', $params)) {
@@ -142,6 +145,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $writer->insertAll($this->exportData);
     }
 
+    #[\Override]
     public function addExportData(
         array $data,
         array $configuration,

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
@@ -27,7 +26,7 @@ use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 use XMLWriter;
 
-class XmlProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
+final class XmlProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
 {
     private XMLWriter $writer;
 
@@ -54,11 +53,13 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $array;
     }
 
+    #[\Override]
     public function testData(array $configuration): bool
     {
         return true;
     }
 
+    #[\Override]
     public function getColumns(array $configuration): array
     {
         $exampleFile = Asset::getById($configuration['exampleFile']);
@@ -82,6 +83,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
+    #[\Override]
     public function getData(
         array $configuration,
         ImportDefinitionInterface $definition,
@@ -94,6 +96,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return new ArrayImportDataSet($this->convertXmlToArray($xml, $configuration['xPath']));
     }
 
+    #[\Override]
     public function addExportData(
         array $data,
         array $configuration,
@@ -113,6 +116,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
     }
 
+    #[\Override]
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $writer = $this->getXMLWriter();

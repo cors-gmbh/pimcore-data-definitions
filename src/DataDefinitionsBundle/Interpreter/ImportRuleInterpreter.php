@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Interpreter;
@@ -22,11 +21,11 @@ use Instride\Bundle\DataDefinitionsBundle\Rules\Model\ImportRule;
 use Instride\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessorInterface;
 use Instride\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface;
 
-class ImportRuleInterpreter implements InterpreterInterface
+final class ImportRuleInterpreter implements InterpreterInterface
 {
-    protected RuleApplierInterface $ruleProcessor;
+    private RuleApplierInterface $ruleProcessor;
 
-    protected ImportRuleValidationProcessorInterface $ruleValidationProcessor;
+    private ImportRuleValidationProcessorInterface $ruleValidationProcessor;
 
     public function __construct(
         ImportRuleValidationProcessorInterface $ruleValidationProcessor,
@@ -36,6 +35,7 @@ class ImportRuleInterpreter implements InterpreterInterface
         $this->ruleProcessor = $ruleProcessor;
     }
 
+    #[\Override]
     public function interpret(InterpreterContextInterface $context): mixed
     {
         $rules = $context->getConfiguration()['rules'];

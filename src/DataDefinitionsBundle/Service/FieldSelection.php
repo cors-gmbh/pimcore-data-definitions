@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 /*
  * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
  *  - Data Definitions Commercial License (DDCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Service;
@@ -19,7 +18,7 @@ use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\ToColumn;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
 
-class FieldSelection
+final class FieldSelection
 {
     public function getClassDefinition(DataObject\ClassDefinition $class): array
     {
@@ -193,7 +192,7 @@ class FieldSelection
         return $result;
     }
 
-    protected function getFieldConfiguration(DataObject\ClassDefinition\Data $field): ToColumn
+    private function getFieldConfiguration(DataObject\ClassDefinition\Data $field): ToColumn
     {
         $toColumn = new ToColumn();
 
