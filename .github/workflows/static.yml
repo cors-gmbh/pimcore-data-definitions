@@ -2,18 +2,22 @@ name: Static Tests (Lint, Stan)
 on:
   push:
     branches: [ '6.0' ]
-  pull_request:
+  pull_request_target:
     branches: [ '6.0' ]
+
+permissions:
+  contents: read
+
+env:
+  APP_ENV: "test"
+  PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/coreshop_test"
+  PIMCORE_PRODUCT_KEY: "${{ secrets.PIMCORE_PRODUCT_KEY }}"
+  PIMCORE_ENCRYPTION_SECRET: "${{ secrets.PIMCORE_ENCRYPTION_SECRET }}"
+
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-    env:
-      APP_ENV: "test"
-      PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/coreshop_test"
-      PIMCORE_PRODUCT_KEY: "${{ secrets.PIMCORE_PRODUCT_KEY }}"
-      PIMCORE_ENCRYPTION_SECRET: "${{ secrets.PIMCORE_ENCRYPTION_SECRET }}"
-
     strategy:
       matrix:
         php: [ 8.3, 8.4 ]
@@ -33,7 +37,16 @@ jobs:
     name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}, Deps ${{ matrix.dependencies }}"
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR head (only for pull_request_target)
+        if: github.event_name == 'pull_request_target'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Checkout PR head (for push or other events)
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v4
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
