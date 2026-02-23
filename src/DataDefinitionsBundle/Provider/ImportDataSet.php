@@ -27,7 +27,7 @@ final class ImportDataSet implements ImportDataSetInterface, \Countable
 
     public function __construct(
         Iterator $iterator,
-        Closure $processor = null,
+        ?Closure $processor = null,
     ) {
         $this->iterator = $iterator;
         $this->countAll = false;

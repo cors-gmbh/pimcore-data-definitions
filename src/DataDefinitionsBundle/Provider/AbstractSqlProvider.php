@@ -60,7 +60,7 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
+        ?FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $db = $this->getDb($configuration);
 

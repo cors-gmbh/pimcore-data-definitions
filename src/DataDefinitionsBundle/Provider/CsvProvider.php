@@ -75,7 +75,7 @@ final class CsvProvider extends AbstractFileProvider implements ImportProviderIn
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
+        ?FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];

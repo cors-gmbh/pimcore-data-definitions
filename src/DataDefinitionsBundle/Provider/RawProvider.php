@@ -56,7 +56,7 @@ final class RawProvider implements ImportProviderInterface
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
+        ?FilterInterface $filter = null,
     ): ImportDataSetInterface {
         return new ArrayImportDataSet($params['data']);
     }

@@ -88,7 +88,7 @@ final class XmlProvider extends AbstractFileProvider implements ImportProviderIn
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
+        ?FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $file = $this->getFile($params);
         $xml = file_get_contents($file);

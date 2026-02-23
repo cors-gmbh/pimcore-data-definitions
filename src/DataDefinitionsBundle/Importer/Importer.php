@@ -291,9 +291,9 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
     private function runImport(
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
-        RunnerInterface $runner = null,
-        ImportDataSetInterface $dataSet = null,
+        ?FilterInterface $filter = null,
+        ?RunnerInterface $runner = null,
+        ?ImportDataSetInterface $dataSet = null,
     ): array {
         if (null === $dataSet) {
             $dataSet = new ImportDataSet(new \EmptyIterator());
@@ -373,8 +373,8 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         array $data,
         ImportDataSetInterface $dataSet,
         array $params,
-        FilterInterface $filter = null,
-        RunnerInterface $runner = null,
+        ?FilterInterface $filter = null,
+        ?RunnerInterface $runner = null,
     ): ?Concrete {
         $object = $this->getObject($definition, $data, $dataSet, $params);
 
@@ -520,7 +520,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         ImportDataSetInterface $dataSet,
         ImportDefinitionInterface $definition,
         array $params,
-        RunnerInterface $runner = null,
+        ?RunnerInterface $runner = null,
     ): void {
         if ($map->getInterpreter()) {
             try {

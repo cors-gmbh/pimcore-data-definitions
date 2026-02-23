@@ -81,7 +81,7 @@ final class JsonProvider extends AbstractFileProvider implements ImportProviderI
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
+        ?FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $file = $this->getFile($params);
 

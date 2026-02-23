@@ -69,7 +69,7 @@ final class ExcelProvider extends AbstractFileProvider implements ImportProvider
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null,
+        ?FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $file = $this->getFile($params);
 
