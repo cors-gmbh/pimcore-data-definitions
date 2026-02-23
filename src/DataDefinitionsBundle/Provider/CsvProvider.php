@@ -86,7 +86,7 @@ final class CsvProvider extends AbstractFileProvider implements ImportProviderIn
 
         $file = $this->getFile($params);
 
-        $csv = Reader::createFromPath($file, 'r');
+        $csv = Reader::from($file);
         $csv->setDelimiter($delimiter);
         $csv->setEnclosure($enclosure);
 
@@ -95,7 +95,7 @@ final class CsvProvider extends AbstractFileProvider implements ImportProviderIn
                 return $column->getIdentifier();
             }, $this->getColumns($configuration));
 
-            $writer = Writer::createFromString('');
+            $writer = Writer::from('');
 
             $stmt = new Statement();
             $records = $stmt->process($csv);

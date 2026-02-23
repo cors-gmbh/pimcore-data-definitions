@@ -12,6 +12,10 @@ doctrine:
                 user: ''
                 password: ''
 
+framework:
+    cache:
+        app: cache.adapter.filesystem
+
 parameters:
     pimcore_test.db.dsn: '%env(PIMCORE_TEST_DB_DSN)%'
     env(PIMCORE_TEST_DB_DSN): ~
