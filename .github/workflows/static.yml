@@ -11,7 +11,7 @@ jobs:
     env:
       APP_ENV: "test"
       PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/coreshop_test"
-      PIMCORE_LICENSE_INSTANCE_KEY: "${{ secrets.PIMCORE_PRODUCT_KEY }}"
+      PIMCORE_PRODUCT_KEY: "${{ secrets.PIMCORE_PRODUCT_KEY }}"
       PIMCORE_ENCRYPTION_SECRET: "${{ secrets.PIMCORE_ENCRYPTION_SECRET }}"
 
     strategy:
