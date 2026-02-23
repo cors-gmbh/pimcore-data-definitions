@@ -13,7 +13,7 @@ env:
   PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/coreshop_test"
   PIMCORE_PRODUCT_KEY: "${{ secrets.PIMCORE_PRODUCT_KEY }}"
   PIMCORE_ENCRYPTION_SECRET: "${{ secrets.PIMCORE_ENCRYPTION_SECRET }}"
-
+  PIMCORE_INSTANCE_IDENTIFIER: "${{ secrets.PIMCORE_INSTANCE_IDENTIFIER }}"
 
 jobs:
   lint:
