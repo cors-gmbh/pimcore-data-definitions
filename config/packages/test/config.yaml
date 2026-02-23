@@ -21,6 +21,8 @@ parameters:
 framework:
     session:
         handler_id: 'Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler'
+    cache:
+        app: cache.adapter.filesystem
 
 data_definitions:
     config_location:

@@ -85,7 +85,7 @@ class Dao extends Listing\Dao\AbstractDao
      */
     public function loadIdList()
     {
-        $queryBuilder = $this->getQueryBuilder(['id']);
+        $queryBuilder = $this->getQueryBuilder('id');
         $assetIds = $this->db->fetchFirstColumn(
             (string) $queryBuilder,
             $this->model->getConditionVariables(),
