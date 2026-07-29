@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "es2017",
+    "moduleResolution": "bundler",
+    "baseUrl": "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/",
+    "strictNullChecks": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "paths": {
+      "*": ["./@mf-types/*"]
+    }
+  },
+  "include": [
+    "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/**/*",
+    "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/@mf-types/*"
+  ]
+}

@@ -62,9 +62,20 @@ final class XmlProvider extends AbstractFileProvider implements ImportProviderIn
     #[\Override]
     public function getColumns(array $configuration): array
     {
-        $exampleFile = Asset::getById($configuration['exampleFile']);
-        $rows = $this->convertXmlToArray($exampleFile->getData(), $configuration['exampleXPath']);
-        $rows = $rows[0];
+        $exampleFile = Asset::getById((int) $configuration['exampleFile']);
+
+        if (null === $exampleFile) {
+            return [];
+        }
+
+        try {
+            $rows = $this->convertXmlToArray($exampleFile->getData(), $configuration['exampleXPath']);
+        } catch (\Throwable $exception) {
+            // a missing or unreadable example file must not break the mapping UI
+            return [];
+        }
+
+        $rows = $rows[0] ?? [];
 
         $returnHeaders = [];
 

@@ -1,0 +1,80 @@
+{
+  "allFiles": [
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/main.39bd37dc.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/remoteEntry.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/737.2ec4607f.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/250.5d1c8227.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/874.a54f35cb.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/417.0ee10bca.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/798.0af19820.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/118.e6a7baed.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/__federation_expose_default_export.78548017.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/890.6d5ce213.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/115.3e2ddd9e.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/163.7eb708f5.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/131.7747f0eb.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/142.4c87e100.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/791.659a6c09.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/869.86a393df.js",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/mf-stats.json",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/mf-manifest.json",
+    "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/main.html"
+  ],
+  "entries": {
+    "main": {
+      "html": [
+        "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/main.html"
+      ],
+      "initial": {
+        "js": [
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/115.3e2ddd9e.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/131.7747f0eb.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/791.659a6c09.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/main.39bd37dc.js"
+        ]
+      },
+      "async": {
+        "js": [
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/791.659a6c09.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/142.4c87e100.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/131.7747f0eb.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/163.7eb708f5.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/115.3e2ddd9e.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/890.6d5ce213.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/118.e6a7baed.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/798.0af19820.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/417.0ee10bca.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/874.a54f35cb.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/250.5d1c8227.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/737.2ec4607f.js"
+        ]
+      }
+    },
+    "datadefinitions": {
+      "initial": {
+        "js": [
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/remoteEntry.js"
+        ]
+      },
+      "async": {
+        "js": [
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/869.86a393df.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/791.659a6c09.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/142.4c87e100.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/131.7747f0eb.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/163.7eb708f5.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/115.3e2ddd9e.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/890.6d5ce213.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/__federation_expose_default_export.78548017.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/118.e6a7baed.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/798.0af19820.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/417.0ee10bca.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/874.a54f35cb.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/250.5d1c8227.js",
+          "/bundles/datadefinitions/studio/dafe41d2-86a5-4b20-b754-d817adf03668/static/js/async/737.2ec4607f.js"
+        ]
+      }
+    }
+  },
+  "integrity": {}
+}

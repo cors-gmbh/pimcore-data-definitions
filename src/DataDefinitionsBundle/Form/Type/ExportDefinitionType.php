@@ -138,7 +138,9 @@ final class ExportDefinitionType extends AbstractResourceType
 
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
-        $form->add('configuration', $configurationType);
+        // definitions accumulate configuration keys across provider changes and
+        // client UIs may submit the stored bag verbatim - never hard-fail on them
+        $form->add('configuration', $configurationType, ['allow_extra_fields' => true]);
     }
 
     /**
@@ -159,7 +161,7 @@ final class ExportDefinitionType extends AbstractResourceType
 
     protected function addFetcherConfigurationFields(FormInterface $form, string $configurationType): void
     {
-        $form->add('fetcherConfig', $configurationType);
+        $form->add('fetcherConfig', $configurationType, ['allow_extra_fields' => true]);
     }
 
     /**

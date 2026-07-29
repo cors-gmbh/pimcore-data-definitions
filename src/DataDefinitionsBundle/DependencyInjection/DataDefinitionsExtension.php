@@ -133,6 +133,11 @@ final class DataDefinitionsExtension extends AbstractModelExtension implements P
 
         $container->setParameter('data_definitions.import_definitions', $config['import_definitions']);
         $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
+
+        // Load Studio UI integration if available
+        if (interface_exists(\Pimcore\Bundle\StudioUiBundle\Webpack\WebpackEntryPointProviderInterface::class)) {
+            $loader->load('services/studio.yaml');
+        }
     }
 
     #[\Override]

@@ -106,7 +106,9 @@ final class ImportDefinitionType extends AbstractResourceType
 
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
-        $form->add('configuration', $configurationType);
+        // definitions accumulate configuration keys across provider changes and
+        // client UIs may submit the stored bag verbatim - never hard-fail on them
+        $form->add('configuration', $configurationType, ['allow_extra_fields' => true]);
     }
 
     /**

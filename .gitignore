@@ -72,3 +72,10 @@ test-commands.txt
 cache
 config/pimcore/data-definitions
 docker-compose.override.yaml
+# Studio UI build
+node_modules/
+.rsbuild/
+dist/
+
+# bundle assets are shipped (blanket "public" above is for the dev-app web root)
+!src/DataDefinitionsBundle/Resources/public/

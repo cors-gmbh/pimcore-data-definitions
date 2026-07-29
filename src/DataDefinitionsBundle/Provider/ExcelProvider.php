@@ -42,19 +42,24 @@ final class ExcelProvider extends AbstractFileProvider implements ImportProvider
     public function getColumns(array $configuration): array
     {
         if ($configuration['exampleFile']) {
-            $exampleFile = Asset::getById($configuration['exampleFile']);
+            $exampleFile = Asset::getById((int) $configuration['exampleFile']);
             if (null !== $exampleFile) {
-                $storage = Storage::get('asset');
-                $stream = $storage->readStream($exampleFile->getFullPath());
-                $reader = $this->createReader($stream);
+                try {
+                    $storage = Storage::get('asset');
+                    $stream = $storage->readStream($exampleFile->getFullPath());
+                    $reader = $this->createReader($stream);
 
-                $sheetIterator = $reader->getSheetIterator();
-                $sheetIterator->rewind();
-                $rowIterator = $sheetIterator->current()->getRowIterator();
-                if (null !== $rowIterator) {
-                    $rowIterator->rewind();
+                    $sheetIterator = $reader->getSheetIterator();
+                    $sheetIterator->rewind();
+                    $rowIterator = $sheetIterator->current()->getRowIterator();
+                    if (null !== $rowIterator) {
+                        $rowIterator->rewind();
 
-                    return $this->buildColumns($rowIterator->current());
+                        return $this->buildColumns($rowIterator->current());
+                    }
+                } catch (\Throwable $exception) {
+                    // a missing or unreadable example file must not break the
+                    // mapping UI - fall through to the configured headers/none
                 }
             }
         } elseif ($configuration['excelHeaders']) {
