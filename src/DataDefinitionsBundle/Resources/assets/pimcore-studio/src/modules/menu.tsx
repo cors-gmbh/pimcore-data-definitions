@@ -28,21 +28,28 @@ export const DataDefinitionsMenuModule = {
       component: ExportDefinitionManager
     })
 
-    // Register main navigation item for Data Definitions
+    // Register main navigation group for Data Definitions. Sits under
+    // AutomationIntegration next to Data Hub (which registers
+    // AutomationIntegration/DataHub with order 100).
     const dataDefinitionsNav: IMainNavItem = {
-      path: 'Settings/Data Definitions'
+      path: 'AutomationIntegration/Data Definitions',
+      label: 'data_definitions.menu.group',
+      order: 110
     }
     mainNavRegistry.registerMainNavItem(dataDefinitionsNav)
 
     // Register Import Definitions navigation item
     const importNav: IMainNavItem = {
-      path: 'Settings/Data Definitions/Import Definitions',
+      path: 'AutomationIntegration/Data Definitions/Import Definitions',
+      label: 'data_definitions.menu.import',
+      order: 10,
       icon: 'data_definitions_icon_import_definition',
       widgetConfig: {
         name: 'Import Definitions',
         id: 'data-definitions-import',
         component: 'data-definitions-import',
         config: {
+          translationKey: 'data_definitions.menu.import',
           icon: {
             type: 'name',
             value: 'data_definitions_icon_import_definition'
@@ -54,13 +61,16 @@ export const DataDefinitionsMenuModule = {
 
     // Register Export Definitions navigation item
     const exportNav: IMainNavItem = {
-      path: 'Settings/Data Definitions/Export Definitions',
+      path: 'AutomationIntegration/Data Definitions/Export Definitions',
+      label: 'data_definitions.menu.export',
+      order: 20,
       icon: 'data_definitions_icon_export_definition',
       widgetConfig: {
         name: 'Export Definitions',
         id: 'data-definitions-export',
         component: 'data-definitions-export',
         config: {
+          translationKey: 'data_definitions.menu.export',
           icon: {
             type: 'name',
             value: 'data_definitions_icon_export_definition'

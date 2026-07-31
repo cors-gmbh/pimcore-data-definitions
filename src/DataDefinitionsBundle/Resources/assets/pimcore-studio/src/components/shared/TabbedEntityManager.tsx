@@ -10,8 +10,8 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react'
-import { Tabs, List, Button, Spin, message, Popconfirm } from 'antd'
-import { PlusOutlined, DeleteOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons'
+import { Tabs, List, Button, Spin, message, Modal, Dropdown } from 'antd'
+import { PlusOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { createStyles } from 'antd-style'
 
@@ -92,9 +92,15 @@ const useStyles = createStyles(({ css, token }) => ({
     display: flex;
     flex-direction: column;
   `,
-  toolbar: css`
+  tabBody: css`
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  `,
+  footer: css`
     padding: 8px 16px;
-    border-bottom: 1px solid ${token.colorBorderSecondary};
+    border-top: 1px solid ${token.colorBorderSecondary};
+    background: ${token.colorBgContainer};
     display: flex;
     gap: 8px;
     justify-content: flex-end;
@@ -211,19 +217,36 @@ export function TabbedEntityManager<T extends EntityWithId>({
     }
   }
 
-  const handleDelete = async (tabKey: string) => {
-    const tab = openTabs.find(t => t.key === tabKey)
-    if (!tab?.id) return
-
+  const handleDelete = async (id: number) => {
     try {
-      await api.delete(tab.id)
-      setOpenTabs(prev => prev.filter(t => t.key !== tabKey))
+      await api.delete(id)
+      // close the tab of the deleted definition, if it is open
+      setOpenTabs(prev => {
+        const remaining = prev.filter(tab => tab.id !== id)
+        if (remaining.length !== prev.length) {
+          setActiveTabKey(remaining.length > 0 ? remaining[remaining.length - 1].key : undefined)
+        }
+        return remaining
+      })
       await loadList()
       message.success(t('data_definitions.deleted'))
     } catch (error) {
       console.error('Failed to delete:', error)
       message.error('Failed to delete')
     }
+  }
+
+  const confirmDelete = (item: T) => {
+    if (!item.id) return
+
+    Modal.confirm({
+      title: t('data_definitions.delete_confirm'),
+      content: item.name,
+      okText: t('data_definitions.yes'),
+      okButtonProps: { danger: true },
+      cancelText: t('data_definitions.no'),
+      onOk: async () => { await handleDelete(item.id!) }
+    })
   }
 
   const handleTabClose = (tabKey: string) => {
@@ -262,7 +285,16 @@ export function TabbedEntityManager<T extends EntityWithId>({
     closable: true,
     children: (
       <div className={styles.tabContent}>
-        <div className={styles.toolbar}>
+        <div className={styles.tabBody}>
+          {tab.loading ? (
+            <div className={styles.emptyContent}>
+              <Spin />
+            </div>
+          ) : tab.data ? (
+            renderDetail(tab.data, (data) => handleDataChange(tab.key, data))
+          ) : null}
+        </div>
+        <div className={styles.footer}>
           <Button
             type="primary"
             icon={<SaveOutlined />}
@@ -271,24 +303,7 @@ export function TabbedEntityManager<T extends EntityWithId>({
           >
             {t('data_definitions.save')}
           </Button>
-          <Popconfirm
-            title={t('data_definitions.delete_confirm')}
-            onConfirm={() => handleDelete(tab.key)}
-            okText={t('data_definitions.yes')}
-            cancelText={t('data_definitions.no')}
-          >
-            <Button icon={<DeleteOutlined />} danger>
-              {t('data_definitions.delete')}
-            </Button>
-          </Popconfirm>
         </div>
-        {tab.loading ? (
-          <div className={styles.emptyContent}>
-            <Spin />
-          </div>
-        ) : tab.data ? (
-          renderDetail(tab.data, (data) => handleDataChange(tab.key, data))
-        ) : null}
       </div>
     )
   }))
@@ -314,9 +329,24 @@ export function TabbedEntityManager<T extends EntityWithId>({
             <List
               dataSource={items}
               renderItem={(item) => (
-                <List.Item onClick={() => handleItemClick(item)}>
-                  {item.name || `#${item.id}`}
-                </List.Item>
+                <Dropdown
+                  trigger={['contextMenu']}
+                  menu={{
+                    items: [
+                      {
+                        key: 'delete',
+                        label: t('data_definitions.delete'),
+                        icon: <DeleteOutlined />,
+                        danger: true,
+                        onClick: () => { confirmDelete(item) }
+                      }
+                    ]
+                  }}
+                >
+                  <List.Item onClick={() => handleItemClick(item)}>
+                    {item.name || `#${item.id}`}
+                  </List.Item>
+                </Dropdown>
               )}
             />
           )}
