@@ -1,5 +1,5 @@
 {
-  "name": "instride/data-definitions",
+  "name": "cors/data-definitions",
   "type": "pimcore-bundle",
   "license": "proprietary",
   "config": {
