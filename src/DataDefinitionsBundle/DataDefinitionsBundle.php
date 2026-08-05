@@ -32,8 +32,6 @@ use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\Persister
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
-use Pimcore\Bundle\AdminBundle\PimcoreAdminBundle;
-use Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle;
 use Pimcore\Extension\Bundle\Installer\InstallerInterface;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -45,10 +43,8 @@ class DataDefinitionsBundle extends AbstractResourceBundle
     {
         parent::registerDependentBundles($collection);
 
-        $collection->addBundles([
-            new PimcoreAdminBundle(),
-            new PimcoreSimpleBackendSearchBundle(),
-        ]);
+        // PimcoreAdminBundle + PimcoreSimpleBackendSearchBundle removed with
+        // Pimcore 2026 (classic admin gone) - no longer registered as dependents
 
         $collection->addBundles([
             new CoreShopRuleBundle(),
@@ -112,33 +108,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         return $this->container->get(Installer::class);
     }
 
-    #[\Override]
-    public function getAdminIframePath(): ?string
-    {
-        return null;
-    }
-
-    #[\Override]
-    public function getJsPaths(): array
-    {
-        return [];
-    }
-
-    #[\Override]
-    public function getCssPaths(): array
-    {
-        return [];
-    }
-
-    #[\Override]
-    public function getEditmodeJsPaths(): array
-    {
-        return [];
-    }
-
-    #[\Override]
-    public function getEditmodeCssPaths(): array
-    {
-        return [];
-    }
+    // classic-admin asset hooks (getAdminIframePath/getJsPaths/getCssPaths/
+    // getEditmodeJsPaths/getEditmodeCssPaths) removed with Pimcore 2026 —
+    // the Studio UI ships via WebpackEntryPointProvider instead
 }

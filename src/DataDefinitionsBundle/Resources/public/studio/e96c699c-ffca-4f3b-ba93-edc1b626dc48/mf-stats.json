@@ -22,7 +22,7 @@
     "globalName": "datadefinitions",
     "pluginVersion": "0.13.1",
     "prefetchInterface": false,
-    "publicPath": "/bundles/datadefinitions/studio/6a201a0d-5e01-4419-a81a-d3bbe26f07e1/"
+    "publicPath": "/bundles/datadefinitions/studio/e96c699c-ffca-4f3b-ba93-edc1b626dc48/"
   },
   "shared": [
     {
@@ -38,8 +38,8 @@
         "js": {
           "async": [],
           "sync": [
-            "static/js/async/417.5fb84430.js",
-            "static/js/async/798.a356b58e.js"
+            "static/js/async/417.ff66e4af.js",
+            "static/js/async/798.a3d87db9.js"
           ]
         },
         "css": {
@@ -61,7 +61,7 @@
         "js": {
           "async": [],
           "sync": [
-            "static/js/async/142.26fc596e.js"
+            "static/js/async/142.7c84dcaf.js"
           ]
         },
         "css": {
@@ -84,7 +84,7 @@
         "js": {
           "async": [],
           "sync": [
-            "static/js/async/890.fcb8c191.js"
+            "static/js/async/890.1fc5b80f.js"
           ]
         },
         "css": {
@@ -107,7 +107,7 @@
         "js": {
           "async": [],
           "sync": [
-            "static/js/async/874.77ae9ecc.js"
+            "static/js/async/874.f7420a90.js"
           ]
         },
         "css": {
@@ -130,8 +130,8 @@
         "js": {
           "async": [],
           "sync": [
-            "static/js/async/118.af466fe2.js",
-            "static/js/async/737.1a22f9d1.js"
+            "static/js/async/118.21b48d3a.js",
+            "static/js/async/737.06a3c114.js"
           ]
         },
         "css": {
@@ -197,12 +197,12 @@
       "assets": {
         "js": {
           "sync": [
-            "static/js/115.18e224e4.js",
-            "static/js/async/163.3242692e.js",
+            "static/js/115.32df5d87.js",
+            "static/js/async/163.97df5197.js",
             "static/js/131.e6f429a8.js",
-            "static/js/282.e0ce4746.js",
-            "static/js/async/869.b6a9d37a.js",
-            "static/js/async/__federation_expose_default_export.9a827c36.js"
+            "static/js/282.7b6fd7f3.js",
+            "static/js/async/869.2d825e2f.js",
+            "static/js/async/__federation_expose_default_export.7f3ed4e3.js"
           ],
           "async": []
         },

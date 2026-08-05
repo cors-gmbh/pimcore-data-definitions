@@ -39,7 +39,6 @@ use Instride\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Instride\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 use Instride\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Instride\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
-use Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle;
 use Pimcore\Config\LocationAwareConfigRepository;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -77,8 +76,8 @@ final class DataDefinitionsExtension extends AbstractModelExtension implements P
             $loader->load('guzzle_psr7.yml');
         }
 
-        $this->registerDependantBundles('coreshop', [PimcoreSimpleBackendSearchBundle::class], $container);
-        $this->registerPimcoreResources('data_definitions', $config['pimcore_admin'], $container);
+        // registerDependantBundles(SimpleBackendSearch) + registerPimcoreResources
+        // (classic-admin JS) removed with Pimcore 2026 - Studio UI ships instead.
 
         $container
             ->registerForAutoconfiguration(CleanerInterface::class)
