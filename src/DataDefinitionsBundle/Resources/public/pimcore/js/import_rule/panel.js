@@ -80,7 +80,7 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
         var rules = Ext.JSON.encode(this.getData());
         var form = Ext.create('Ext.form.Panel', {
             standardSubmit: true,
-            url: '/admin/data_definitions/import_rules/export'
+            url: '/pimcore-studio/api/data-definitions/import-rules/export'
         });
 
         form.submit({
@@ -92,7 +92,7 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
     },
 
     importRules: function () {
-        pimcore.helpers.uploadDialog('/admin/data_definitions/import_rules/import', 'file', function (res) {
+        pimcore.helpers.uploadDialog('/pimcore-studio/api/data-definitions/import-rules/import', 'file', function (res) {
             var res = Ext.decode(res.response.responseText);
 
             if (res.success) {
