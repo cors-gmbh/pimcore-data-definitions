@@ -18,15 +18,14 @@ use Instride\Bundle\DataDefinitionsBundle\Form\Type\ImportRulesImportType;
 use OpenSpout\Common\Entity\Row;
 use OpenSpout\Reader\XLSX\Reader;
 use OpenSpout\Writer\XLSX\Writer;
-// Pimcore 2026: classic GDPR\AdminController gone - kwizda compat shim base
-use Pimcore\Bundle\AdminBundle\Controller\AdminAbstractController as AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class ImportRuleController extends AdminController
+final class ImportRuleController extends AbstractController
 {
     public function importAction(Request $request, FormFactoryInterface $formFactory): JsonResponse
     {
