@@ -1,6 +1,4 @@
-# Studio-UI-Labels. Die klassische ExtJS-Oberfläche löst ihre Keys über
-# admin.*.yml auf, Pimcore Studio über die Domain `studio` — daher dieser
-# eigene Katalog.
+# Studio-UI-Labels (Translation-Domain `studio`).
 data_definitions.menu.group: 'Data Definitions'
 data_definitions.menu.import: 'Import-Definitionen'
 data_definitions.menu.export: 'Export-Definitionen'
