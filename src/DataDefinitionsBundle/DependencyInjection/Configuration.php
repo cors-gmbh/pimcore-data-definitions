@@ -134,7 +134,6 @@ final class Configuration implements ConfigurationInterface
             ->end()
         ;
 
-        $this->addPimcoreResourcesSection($rootNode);
         $this->addModelsSection($rootNode);
 
         return $treeBuilder;
@@ -191,30 +190,4 @@ final class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addPimcoreResourcesSection(ArrayNodeDefinition $node)
-    {
-        $node->children()
-            ->arrayNode('pimcore_admin')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->arrayNode('js')
-                        ->useAttributeAsKey('name')
-                        ->prototype('scalar')->end()
-                    ->end()
-                    ->arrayNode('css')
-                        ->useAttributeAsKey('name')
-                        ->prototype('scalar')->end()
-                    ->end()
-                    ->arrayNode('install')
-                        ->addDefaultsIfNotSet()
-                        ->ignoreExtraKeys(false)
-                        ->children()
-                            ->scalarNode('sql')->defaultValue(['@DataDefinitionsBundle/Resources/install/pimcore/sql/data.sql'])->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ->end()
-        ;
-    }
 }

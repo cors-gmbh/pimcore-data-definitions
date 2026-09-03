@@ -12,22 +12,12 @@ acme_bundle.data_definitions.my_getter:
       - { name: data_definitions.getter, type: mygetter }
 ```
 
-If your Getter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
+If your Getter does have configuration as well, you need to create a new FormType and a
+configuration component for Pimcore Studio.
 
-```javascript
-pimcore.registerNS('pimcore.plugin.datadefinitions.getters.mygetter');
-
-pimcore.plugin.datadefinitions.getters.mygetter = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
-
-});
-
-```
-
-
-You also need to load your Javascript File in your config.yml
-```yml
-data_definitionss:
-  pimcore_admin:
-    js:
-      mygetter: '/static/pimcore/mygetter.js'
-```
+The configuration UI is a React component in the Studio plugin. Register it in the
+Data Definitions registry (see `Resources/assets/pimcore-studio/src/modules/registry-module.ts`
+and `registry/service-ids.ts`): retrieve the registry via `container.get()` from
+`@pimcore/studio-ui-bundle` and call `register('mygetter', YourConfigComponent)`. The
+classic ExtJS `pimcore.plugin.datadefinitions.*` classes and the `pimcore_admin.js`
+config entries are gone with Pimcore 2026.
