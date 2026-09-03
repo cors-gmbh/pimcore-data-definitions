@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
  * @license    DDCL
  */
 
@@ -59,14 +59,6 @@ final class DataDefinitionsExtension extends AbstractModelExtension implements P
         $bundles = $container->getParameter('kernel.bundles');
 
         if (array_key_exists('CoreShopCoreBundle', $bundles)) {
-            $config['pimcore_admin']['js']['coreshop_interpreter_price'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/price.js';
-            $config['pimcore_admin']['js']['coreshop_interpreter_stores'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/stores.js';
-            $config['pimcore_admin']['js']['coreshop_interpreter_money'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/money.js';
-            $config['pimcore_admin']['js']['coreshop_setter_storePrice'] = '/bundles/datadefinitions/pimcore/js/coreshop/setter/storePrice.js';
-            $config['pimcore_admin']['js']['coreshop_getter_storePrice'] = '/bundles/datadefinitions/pimcore/js/coreshop/getter/storePrice.js';
-            $config['pimcore_admin']['js']['coreshop_setter_store_values'] = '/bundles/datadefinitions/pimcore/js/coreshop/setter/storeValues.js';
-            $config['pimcore_admin']['js']['coreshop_getter_store_values'] = '/bundles/datadefinitions/pimcore/js/coreshop/getter/storeValues.js';
-
             $loader->load('coreshop.yml');
         }
 
@@ -75,9 +67,6 @@ final class DataDefinitionsExtension extends AbstractModelExtension implements P
         if (class_exists(\GuzzleHttp\Psr7\HttpFactory::class)) {
             $loader->load('guzzle_psr7.yml');
         }
-
-        // registerDependantBundles(SimpleBackendSearch) + registerPimcoreResources
-        // (classic-admin JS) removed with Pimcore 2026 - Studio UI ships instead.
 
         $container
             ->registerForAutoconfiguration(CleanerInterface::class)

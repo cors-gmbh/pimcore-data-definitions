@@ -1,5 +1,5 @@
 {
-  "name": "@instride/data-definitions-studio",
+  "name": "@cors/data-definitions-studio",
   "version": "1.0.0",
   "description": "Data Definitions - Pimcore Studio Plugin",
   "main": "src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/index.ts",

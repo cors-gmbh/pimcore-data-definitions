@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [BC] Pimcore 2026 / Studio only: the classic-admin (ExtJS) UI is gone. Removed
+  `Resources/public/pimcore`, the `data_definitions.pimcore_admin` js/css config
+  tree, the `admin` translation catalogue and the classic settings listener.
+- [BC] Routes moved from `/admin/...` to `/pimcore-studio/api/...`; the Studio
+  plugin talks to `/pimcore-studio/api/data_definitions/...` without the classic
+  CSRF token.
+- Studio: XLSX export/import of import rules (import_rule interpreter) ported
+  from the classic panel.
+
 ### [5.0.0]
 
 - Pimcore 11 compatibility

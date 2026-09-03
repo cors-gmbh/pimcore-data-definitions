@@ -1,5 +1,4 @@
 ![DataDefinitions](docs/images/github_banner.png "Data Definitions")
-[![Latest Stable Version](https://img.shields.io/packagist/v/instride/data-definitions.svg?style=flat-square)](https://packagist.org/packages/instride/data-definitions)
 
 Data Definitions allows you to define your DataObject Imports and Exports using a nice GUI and re-run the definitions
 as often you like. Everything within Data Definitions is extendable.
@@ -7,12 +6,12 @@ as often you like. Everything within Data Definitions is extendable.
 ![Interface](docs/images/mapping.png)
 
 ## Requirements
-* Pimcore 12
+* Pimcore 2026 (Pimcore Studio)
 
 ## Getting started
 ```bash
 # Install via composer
-composer require instride/data-definitions
+composer require cors/data-definitions
 ```
 
 ```php
@@ -36,8 +35,8 @@ bin/console pimcore:bundle:install DataDefinitionsBundle
  - [Export Definitions](./docs/exports.md)
 
 ## License
-**instride AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
-[instride.ch](https://instride.ch), connect@instride.ch  
-Copyright © 2024 instride AG. All rights reserved.
+**CORS GmbH**  
+[cors.gmbh](https://www.cors.gmbh), office@cors.gmbh  
+Copyright © CORS GmbH. All rights reserved.
 
 For licensing details please visit [LICENSE.md](LICENSE.md)

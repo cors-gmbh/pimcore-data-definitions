@@ -1,0 +1,51 @@
+{
+  "entrypoints": {
+    "main": {
+      "js": [
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/791.348d7627.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/639.d86bae6b.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/131.7747f0eb.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/560.85b58727.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/115.c21f6826.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/890.2cbe512e.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/118.4b065eb9.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/798.0aff44e4.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/417.029c6253.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/874.902305bb.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/869.7aee2dc4.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/737.4f2c5233.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/115.c21f6826.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/131.7747f0eb.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/791.348d7627.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/main.3d6ef11a.js"
+      ],
+      "css": []
+    },
+    "datadefinitions": {
+      "js": [
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/334.7f9b9521.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/791.348d7627.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/639.d86bae6b.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/131.7747f0eb.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/560.85b58727.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/115.c21f6826.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/890.2cbe512e.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/__federation_expose_default_export.30b791c8.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/118.4b065eb9.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/798.0aff44e4.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/417.029c6253.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/874.902305bb.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/869.7aee2dc4.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/async/737.4f2c5233.js",
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/remoteEntry.js"
+      ],
+      "css": []
+    },
+    "exposeRemote": {
+      "js": [
+        "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/exposeRemote.js"
+      ],
+      "css": []
+    }
+  }
+}

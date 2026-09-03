@@ -1,5 +1,4 @@
-# Studio UI labels. The classic ExtJS UI resolves its keys against admin.*.yml,
-# Pimcore Studio against the `studio` domain — hence this separate catalogue.
+# Studio UI labels (translation domain `studio`).
 data_definitions.menu.group: 'Data Definitions'
 data_definitions.menu.import: 'Import Definitions'
 data_definitions.menu.export: 'Export Definitions'
@@ -196,3 +195,8 @@ data_definitions.setter.field_collection.keys: 'Identifying keys'
 data_definitions.setter.localized_field.language: 'Language'
 data_definitions.setter.object_brick.class: 'Object brick'
 data_definitions.setter.object_brick.field: 'Field'
+data_definitions.import_rule.export: 'Export'
+data_definitions.import_rule.import: 'Import'
+data_definitions.import_rule.import_success: 'Import rules imported'
+data_definitions.import_rule.import_failed: 'Import failed'
+data_definitions.import_rule.export_failed: 'Export failed'

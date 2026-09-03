@@ -1,12 +1,11 @@
 /**
  * DataDefinitions API Service
  *
- * Talks to the existing classic-admin resource controllers
- * (/admin/data_definitions/...). Those routes are session-authenticated and
- * CSRF-protected; CoreShop's BodyListener decodes JSON request bodies, so we
- * can post application/json directly. A dedicated Studio Backend API layer
- * can replace this later without touching the components (only buildUrl and
- * the fetch helpers would change).
+ * Talks to the CoreShop resource controllers under the Studio API prefix
+ * (/pimcore-studio/api/data_definitions/...). The routes sit behind the Studio
+ * API firewall and are authenticated by the Studio session, so `credentials:
+ * 'include'` is all that is needed. CoreShop's BodyListener decodes JSON
+ * request bodies, so we can post application/json directly.
  */
 
 import type { ImportDefinition, ExportDefinition, DefinitionConfig, ColumnResponse } from '../types/definitions'
@@ -15,28 +14,8 @@ interface EntityWithId {
   id?: number
 }
 
-const ADMIN_BASE = '/admin/data_definitions'
-
-/**
- * Pimcore's classic-admin firewall requires the x-pimcore-csrf-token header
- * on mutating admin routes. Classic's Ext.Ajax injects it automatically;
- * Studio plugins calling /admin endpoints fetch it themselves. The token
- * endpoint (/admin/login/csrf-token) is session-bound and public.
- */
-let cachedCsrfToken: string | null = null
-
-async function adminCsrfToken (): Promise<string> {
-  if (cachedCsrfToken !== null) {
-    return cachedCsrfToken
-  }
-
-  const response = await fetch('/admin/login/csrf-token', { credentials: 'include' })
-  const result: { csrfToken?: string } = await response.json()
-
-  cachedCsrfToken = result.csrfToken ?? ''
-
-  return cachedCsrfToken
-}
+const API_BASE = '/pimcore-studio/api/data_definitions'
+const IMPORT_RULES_BASE = '/pimcore-studio/api/data-definitions/import-rules'
 
 async function failWith (action: string, response: Response): Promise<never> {
   let detail = ''
@@ -70,14 +49,11 @@ async function adminGet (url: string): Promise<Response> {
 }
 
 async function adminSend (url: string, method: 'POST' | 'DELETE', body?: unknown): Promise<Response> {
-  const token = await adminCsrfToken()
-
   return await fetch(url, {
     method,
     credentials: 'include',
     headers: {
-      ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
-      'x-pimcore-csrf-token': token
+      ...(body !== undefined ? { 'Content-Type': 'application/json' } : {})
     },
     ...(body !== undefined ? { body: JSON.stringify(body) } : {})
   })
@@ -149,7 +125,7 @@ abstract class BaseEntityApi<T extends EntityWithId> {
  */
 export class ImportDefinitionApi extends BaseEntityApi<ImportDefinition> {
   protected buildUrl (route: string): string {
-    return `${ADMIN_BASE}/import_definitions${route}`
+    return `${API_BASE}/import_definitions${route}`
   }
 
   /**
@@ -160,12 +136,10 @@ export class ImportDefinitionApi extends BaseEntityApi<ImportDefinition> {
     formData.append('Filedata', file)
     formData.append('id', String(definitionId))
 
-    const token = await adminCsrfToken()
     const response = await fetch(this.buildUrl('/import'), {
       method: 'POST',
       credentials: 'include',
       // no explicit Content-Type — the browser sets the multipart boundary
-      headers: { 'x-pimcore-csrf-token': token },
       body: formData
     })
     if (!response.ok) await failWith('Importing definition', response)
@@ -178,7 +152,41 @@ export class ImportDefinitionApi extends BaseEntityApi<ImportDefinition> {
  */
 export class ExportDefinitionApi extends BaseEntityApi<ExportDefinition> {
   protected buildUrl (route: string): string {
-    return `${ADMIN_BASE}/export_definitions${route}`
+    return `${API_BASE}/export_definitions${route}`
+  }
+}
+
+/**
+ * Import rules of the import_rule interpreter: XLSX round trip
+ * (ImportRuleController::exportAction / importAction).
+ */
+export const importRuleApi = {
+  async exportRules (rules: unknown[]): Promise<Blob> {
+    const response = await fetch(`${IMPORT_RULES_BASE}/export`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ rules: JSON.stringify(rules) })
+    })
+    if (!response.ok) await failWith('Exporting import rules', response)
+    return await response.blob()
+  },
+
+  async importRules<R> (file: File): Promise<R[]> {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const response = await fetch(`${IMPORT_RULES_BASE}/import`, {
+      method: 'POST',
+      credentials: 'include',
+      body: formData
+    })
+    if (!response.ok) await failWith('Importing import rules', response)
+    const data: { success?: boolean, rules?: R[], message?: string } = await response.json()
+    if (data.success !== true || !Array.isArray(data.rules)) {
+      throw new Error(typeof data.message === 'string' && data.message !== '' ? data.message : 'Import rejected by the server')
+    }
+    return data.rules
   }
 }
 

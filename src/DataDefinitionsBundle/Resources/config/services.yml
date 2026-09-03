@@ -388,10 +388,6 @@ services:
       arguments:
         $locator: !tagged_locator { tag: flysystem.storage }
 
-    Instride\Bundle\DataDefinitionsBundle\EventListener\PimcoreSettingsListener:
-      tags:
-        - { name: kernel.event_listener, event: pimcore.admin.indexAction.settings, method: indexSettings }
-
     Instride\Bundle\DataDefinitionsBundle\EventListener\WriteableListener:
       tags:
         - { name: kernel.event_subscriber }

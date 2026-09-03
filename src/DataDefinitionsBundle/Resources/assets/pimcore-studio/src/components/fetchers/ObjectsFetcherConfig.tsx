@@ -5,7 +5,7 @@
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
  * @license    DDCL
  */
 

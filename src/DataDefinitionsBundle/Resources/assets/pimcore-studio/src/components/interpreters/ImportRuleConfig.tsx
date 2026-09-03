@@ -18,7 +18,9 @@ import {
   Card,
   Space,
   Empty,
-  Dropdown
+  Dropdown,
+  Upload,
+  message
 } from 'antd'
 import {
   PlusOutlined,
@@ -28,11 +30,14 @@ import {
   SettingOutlined,
   SearchOutlined,
   ThunderboltOutlined,
-  EditOutlined
+  EditOutlined,
+  DownloadOutlined,
+  UploadOutlined
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import type { InterpreterConfigProps } from './index'
 import { RuleActionConfig, RuleConditionConfig } from '../rules'
+import { importRuleApi } from '../../services/api'
 
 interface RuleCondition {
   type: string
@@ -119,6 +124,43 @@ export const ImportRuleConfig: React.FC<InterpreterConfigProps> = ({
 
   const updateRule = (ruleId: string, updates: Partial<ImportRule>) => {
     setRules(rules.map(r => r.id === ruleId ? { ...r, ...updates } : r))
+  }
+
+  // XLSX round trip of the whole rule set (same format as the former classic panel)
+  const exportRules = async () => {
+    try {
+      const blob = await importRuleApi.exportRules(rules)
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'import-rules.xlsx'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : t('data_definitions.import_rule.export_failed'))
+    }
+  }
+
+  const importRules = async (file: File): Promise<boolean> => {
+    try {
+      const imported = await importRuleApi.importRules<Partial<ImportRule>>(file)
+      const newRules: ImportRule[] = imported.map(rule => ({
+        id: typeof rule.id === 'string' && rule.id !== '' ? rule.id : generateId(),
+        name: rule.name ?? '',
+        active: rule.active !== false,
+        conditions: rule.conditions ?? [],
+        actions: rule.actions ?? []
+      }))
+      setRules(newRules)
+      setSelectedRuleId(newRules.length > 0 ? newRules[0].id : null)
+      message.success(t('data_definitions.import_rule.import_success'))
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : t('data_definitions.import_rule.import_failed'))
+    }
+    // handled here — keep antd's Upload from posting the file itself
+    return false
   }
 
   // Condition handlers
@@ -428,14 +470,36 @@ export const ImportRuleConfig: React.FC<InterpreterConfigProps> = ({
             flexDirection: 'column'
           }}>
             <div style={{ padding: 8, borderBottom: '1px solid #f0f0f0' }}>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={addRule}
-                block
-              >
-                {t('data_definitions.add')}
-              </Button>
+              <Space direction="vertical" style={{ width: '100%' }}>
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={addRule}
+                  block
+                >
+                  {t('data_definitions.add')}
+                </Button>
+                <Space.Compact style={{ width: '100%' }}>
+                  <Button
+                    icon={<DownloadOutlined />}
+                    onClick={() => { void exportRules() }}
+                    disabled={rules.length === 0}
+                    style={{ width: '50%' }}
+                  >
+                    {t('data_definitions.import_rule.export')}
+                  </Button>
+                  <Upload
+                    accept=".xlsx"
+                    showUploadList={false}
+                    beforeUpload={file => importRules(file)}
+                    style={{ width: '50%' }}
+                  >
+                    <Button icon={<UploadOutlined />} style={{ width: '100%' }}>
+                      {t('data_definitions.import_rule.import')}
+                    </Button>
+                  </Upload>
+                </Space.Compact>
+              </Space>
             </div>
             <div style={{ flex: 1, overflow: 'auto' }}>
               <List

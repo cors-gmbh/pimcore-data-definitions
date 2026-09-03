@@ -132,22 +132,12 @@ acme_bundle.data_definitions.my_interpreter:
       - { name: data_definitions.interpreter, type: myinterpreter, form-type: Instride\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 ```
 
-If your Interpreter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
+If your Interpreter does have configuration as well, you need to create a new FormType and a
+configuration component for Pimcore Studio.
 
-```javascript
-pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.myinterpreter');
-
-pimcore.plugin.datadefinitions.interpreters.myinterpreter = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
-
-});
-
-```
-
-You also need to load your Javascript File in your config.yml
-
-```yml
-data_definitions:
-  pimcore_admin:
-    js:
-      my_interpreter: '/static/pimcore/myinterpreter.js'
-```
+The configuration UI is a React component in the Studio plugin. Register it in the
+Data Definitions registry (see `Resources/assets/pimcore-studio/src/modules/registry-module.ts`
+and `registry/service-ids.ts`): retrieve the registry via `container.get()` from
+`@pimcore/studio-ui-bundle` and call `register('myinterpreter', YourConfigComponent)`. The
+classic ExtJS `pimcore.plugin.datadefinitions.*` classes and the `pimcore_admin.js`
+config entries are gone with Pimcore 2026.
