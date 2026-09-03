@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright 2024 instride AG (https://instride.ch)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
  */
 

@@ -7,7 +7,7 @@
         window.alternativePluginExportPaths = {}
       }
 
-      window.pluginRemotes.datadefinitions = "/bundles/datadefinitions/studio/aec4873c-08c7-4a99-8cbb-6fce0966c87a/static/js/remoteEntry.js"
+      window.pluginRemotes.datadefinitions = "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/static/js/remoteEntry.js"
 
       
     

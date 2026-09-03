@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
  * @license    DDCL
  */
 
@@ -35,7 +35,7 @@ final class Configuration implements ConfigurationInterface
     #[\Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('instride_data_definitions');
+        $treeBuilder = new TreeBuilder('data_definitions');
         $rootNode = $treeBuilder->getRootNode();
 
         ConfigurationHelper::addConfigLocationWithWriteTargetNodes($rootNode, [

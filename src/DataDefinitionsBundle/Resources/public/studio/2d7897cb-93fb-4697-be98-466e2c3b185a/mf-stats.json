@@ -6,7 +6,7 @@
     "type": "app",
     "buildInfo": {
       "buildVersion": "1.0.0",
-      "buildName": "@instride/data-definitions-studio"
+      "buildName": "@cors/data-definitions-studio"
     },
     "remoteEntry": {
       "name": "static/js/remoteEntry.js",
@@ -22,7 +22,7 @@
     "globalName": "datadefinitions",
     "pluginVersion": "0.13.1",
     "prefetchInterface": false,
-    "publicPath": "/bundles/datadefinitions/studio/aec4873c-08c7-4a99-8cbb-6fce0966c87a/"
+    "publicPath": "/bundles/datadefinitions/studio/2d7897cb-93fb-4697-be98-466e2c3b185a/"
   },
   "shared": [
     {
