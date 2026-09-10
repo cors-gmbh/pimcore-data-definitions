@@ -13,13 +13,26 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Studio;
 
-use Pimcore\Bundle\StudioUiBundle\Webpack\WebpackEntryPointProviderInterface;
+use Pimcore\Bundle\StudioUiBundle\Build\BuildArchive;
+use Pimcore\Bundle\StudioUiBundle\Build\BuildArchiveExtractionTrait;
+use Pimcore\Bundle\StudioUiBundle\Build\BuildArchiveProviderInterface;
 
-final class WebpackEntryPointProvider implements WebpackEntryPointProviderInterface
+final class WebpackEntryPointProvider implements BuildArchiveProviderInterface
 {
-    public function getEntryPointsJsonLocations(): array
+    use BuildArchiveExtractionTrait;
+
+    /**
+     * The build is shipped as Resources/build-dist/build-<id>.zip and unpacked into
+     * Resources/public/studio by Pimcore's BuildArchiveExtractor at cache warmup
+     * (pimcore/studio-ui-bundle#3779). The extractor is injected through the trait's
+     * #[Required] setter, which the autowired service definition satisfies.
+     */
+    protected function buildArchive(): BuildArchive
     {
-        return glob(__DIR__ . '/../Resources/public/studio/*/entrypoints.json') ?: [];
+        return new BuildArchive(
+            archiveGlob: __DIR__ . '/../Resources/build-dist/build*.zip',
+            targetDir: __DIR__ . '/../Resources/public/studio',
+        );
     }
 
     public function getEntryPoints(): array
