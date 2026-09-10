@@ -7,7 +7,7 @@
     ".": "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/index.ts"
   },
   "scripts": {
-    "build": "rsbuild build",
+    "build": "rsbuild build && studio-package-build --build-dir src/DataDefinitionsBundle/Resources/public/studio --out-dir src/DataDefinitionsBundle/Resources/build-dist",
     "dev": "rsbuild dev",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src",
     "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx ./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src --fix",
@@ -26,11 +26,10 @@
     "@types/react-dom": "18.3.x",
     "concurrently": "^8.2.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.3.3",
-    "uuid": "^9.0.0"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@pimcore/studio-ui-bundle": "2025.4.3",
+    "@pimcore/studio-ui-bundle": "2025.4.14",
     "@reduxjs/toolkit": "^2.0.1",
     "antd": "^5.12.0",
     "antd-style": "3.7.x",

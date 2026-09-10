@@ -92,5 +92,8 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "conflict": {
+    "pimcore/studio-ui-bundle": "<2025.4.12"
+  }
 }
