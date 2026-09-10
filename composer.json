@@ -36,7 +36,7 @@
         "league/csv": "^9.7",
         "nyholm/psr7": "^1.5",
         "openspout/openspout": "^4.23",
-        "pimcore/pimcore": "^2026.1",
+        "pimcore/pimcore": "^2026.2",
         "psr/http-client-implementation": "^1.0",
         "psr/http-factory-implementation": "^1.0",
         "symfony/http-client": "^7.4"
@@ -84,5 +84,8 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "conflict": {
+        "pimcore/studio-ui-bundle": "<2026.2"
+    }
 }
