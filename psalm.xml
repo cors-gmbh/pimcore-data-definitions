@@ -7,14 +7,14 @@
             xpointer="xpointer(/psalm/*[not(self::projectFiles)])"
     />
     <projectFiles>
-        <directory name="src/DataDefinitionsBundle" />
+        <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
             <!-- Optional CoreShop integrations: only loaded when the CoreShop components are installed -->
-            <directory name="src/DataDefinitionsBundle/Interpreter/CoreShop" />
-            <directory name="src/DataDefinitionsBundle/Setter/CoreShop" />
-            <directory name="src/DataDefinitionsBundle/Form/Type/Interpreter/CoreShop" />
-            <directory name="src/DataDefinitionsBundle/Form/Type/Setter/CoreShop" />
+            <directory name="src/Interpreter/CoreShop" />
+            <directory name="src/Setter/CoreShop" />
+            <directory name="src/Form/Type/Interpreter/CoreShop" />
+            <directory name="src/Form/Type/Setter/CoreShop" />
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>

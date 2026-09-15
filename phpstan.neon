@@ -10,7 +10,7 @@ parameters:
     level: 3
 
     paths:
-        - src/DataDefinitionsBundle
+        - src
 
     symfony:
         containerXmlPath: var/cache/dev/KernelDevDebugContainer.xml

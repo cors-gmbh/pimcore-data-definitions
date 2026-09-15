@@ -2,15 +2,15 @@
   "name": "@cors/data-definitions-studio",
   "version": "1.0.0",
   "description": "Data Definitions - Pimcore Studio Plugin",
-  "main": "src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/index.ts",
+  "main": "src/Resources/assets/pimcore-studio/src/index.ts",
   "exports": {
-    ".": "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/index.ts"
+    ".": "./src/Resources/assets/pimcore-studio/src/index.ts"
   },
   "scripts": {
-    "build": "rsbuild build && studio-package-build --build-dir src/DataDefinitionsBundle/Resources/public/studio --out-dir src/DataDefinitionsBundle/Resources/build-dist",
+    "build": "rsbuild build && studio-package-build --build-dir src/Resources/public/studio --out-dir src/Resources/build-dist",
     "dev": "rsbuild dev",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src",
-    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx ./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src --fix",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src/Resources/assets/pimcore-studio/src",
+    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx ./src/Resources/assets/pimcore-studio/src --fix",
     "check-types": "tsc --noEmit",
     "check-types-watch": "tsc --noEmit --watch",
     "clean": "rm -rf node_modules/.cache dist"

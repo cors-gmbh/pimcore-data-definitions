@@ -1,5 +1,5 @@
 # Files that are not part of the distributed composer package (cors/data-definitions).
-# The bundle itself is src/DataDefinitionsBundle (+ composer.json, README.md, docs/, LICENSE.md);
+# The bundle itself is src (+ composer.json, README.md, docs/, LICENSE.md);
 # everything below only serves the dev harness, the CI, the Behat suites or the Studio frontend build.
 /dev                                    export-ignore
 /tests                                  export-ignore
@@ -30,5 +30,5 @@
 /rsbuild.config.ts                      export-ignore
 /tsconfig.json                          export-ignore
 # Placeholder so the synced Static Tests lint path (src/Resources/config) exists; the bundle config
-# lives in src/DataDefinitionsBundle/Resources/config
+# lives in src/Resources/config
 /src/Resources                          export-ignore

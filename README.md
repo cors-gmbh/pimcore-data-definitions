@@ -38,7 +38,7 @@ bin/console pimcore:bundle:install DataDefinitionsBundle
 
 The repository doubles as a runnable Pimcore application on **Pimcore 2026 with Studio** (the
 CORS bundle template: `Kernel.php`, `bin/console`, `config/`, `dev/`, `docker-compose.yaml`
-including the shared `dev-compose` stack). The bundle itself is `src/DataDefinitionsBundle`;
+including the shared `dev-compose` stack). The bundle itself is `src`;
 `.gitattributes` keeps the harness files out of the distributed composer package.
 
 ```bash
@@ -90,7 +90,7 @@ npm ci
 npm run build
 ```
 
-The build is shipped as an archive in `src/DataDefinitionsBundle/Resources/build-dist/` and is
+The build is shipped as an archive in `src/Resources/build-dist/` and is
 committed by the `Studio Frontend Build` workflow on pushes to a version branch.
 
 ## License

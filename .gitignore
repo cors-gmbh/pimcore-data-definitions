@@ -38,8 +38,8 @@ supervisord.pid
 
 # --- Studio frontend build ---
 # Expanded Studio build. Not committed: the build ships as an archive in
-# src/DataDefinitionsBundle/Resources/build-dist/build-<id>.zip, which Pimcore's BuildArchiveExtractor
-# unpacks into src/DataDefinitionsBundle/Resources/public/studio at cache warmup. The extractor's
+# src/Resources/build-dist/build-<id>.zip, which Pimcore's BuildArchiveExtractor
+# unpacks into src/Resources/public/studio at cache warmup. The extractor's
 # marker, lock and temporary directories live next to the build.
-/src/DataDefinitionsBundle/Resources/public/studio/*
-/src/DataDefinitionsBundle/Resources/public/.studio*
+/src/Resources/public/studio/*
+/src/Resources/public/.studio*
