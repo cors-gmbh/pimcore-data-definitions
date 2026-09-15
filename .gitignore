@@ -1,88 +1,45 @@
-# remove the following ignores for your project
-/config/pimcore/constants.php
-
-# symfony default
-/.web-server-pid
-/build/
-/phpunit.xml
-/public/bundles/
-
-# local config
-/.env.local
-/.env.local.php
-/.env.*.local
-!/config/local
-/config/local/*
-!config/local/.gitkeep
-
-# pimcore legacy (remove this for your own development)
-!/legacy
-/legacy/*
-!legacy/.gitkeep
-!legacy/bundle
-
-/var/*
-!/var/.gitkeep
-!/var/classes/
-/var/classes/DataObject
-
-!/var/config
-/var/config/system.yml
-/var/config/debug-mode.php
-/var/config/maintenance.php
-
-# project specific recommendations
-/var/config/tag-manager.php
-
-/public/var/
-/web/var/
-/public/sitemap*.xml
-
-# PHP-CS-Fixer
-/.php_cs
-/.php_cs.cache
-
-# composer
 /vendor/
-
-# PhpStorm / IDEA
-.idea
-# NetBeans
-nbproject
-
+/node_modules/
+/.rsbuild/
+/dist/
 .DS_Store
-.DS_Store\?
-._*
-.Spotlight-V100
-.Trashes
-Icon\?
-*.sublime-workspace
-*.sublime-project
 .idea/
-composer.lock
-docker-compose.yml
-config/local
-var/classes
-var/config
-test.csv
-web
-public
-test-commands.txt
-.docker
-cache
-config/pimcore/data-definitions
-docker-compose.override.yaml
-# Studio UI build
-node_modules/
-.rsbuild/
-dist/
+.php-cs-fixer.cache
+# dev environment only, the bundle itself must not pin its PHP dependencies
+/composer.lock
 
-# bundle assets are shipped (blanket "public" above is for the dev-app web root)
-!src/DataDefinitionsBundle/Resources/public/
+# --- dev harness ---
+# var is generated, but PHPStan (Pimcore extension) needs var/classes/DataObject in CI
+/var/*
+!/var/classes
+/var/classes/*
+!/var/classes/DataObject
+/var/classes/DataObject/*
+!/var/classes/DataObject/.gitkeep
+# the anchored var rule above does not cover the web root
+/public/var
+/public/bundles
+.env.local
+.env.*.local
+# config.yaml imports local/*.yaml; the kernel fails without the directory in CI
+/config/local/*
+!/config/local/.gitkeep
+/config/reference.php
+/config/pimcore/data-definitions
+/compose.override.yaml
+/docker-compose.override.yaml
+/.docker
+supervisord.pid
 
-# Expanded Studio frontend build. Not committed: the build ships as an archive in
-# src/DataDefinitionsBundle/Resources/build-dist/build-<id>.zip, which Pimcore's BuildArchiveExtractor unpacks into
-# src/DataDefinitionsBundle/Resources/public/studio at cache warmup. The extractor's marker, lock and temporary directories
-# live next to the build.
-src/DataDefinitionsBundle/Resources/public/studio/*
-src/DataDefinitionsBundle/Resources/public/.studio*
+# --- Behat ---
+/etc/build/*
+!/etc/build/.gitkeep
+/test.csv
+
+# --- Studio frontend build ---
+# Expanded Studio build. Not committed: the build ships as an archive in
+# src/Resources/build-dist/build-<id>.zip, which Pimcore's BuildArchiveExtractor
+# unpacks into src/Resources/public/studio at cache warmup. The extractor's
+# marker, lock and temporary directories live next to the build.
+/src/Resources/public/studio/*
+/src/Resources/public/.studio*

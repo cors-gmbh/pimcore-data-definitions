@@ -1,7 +1,10 @@
+# ⚠️  ZENTRAL VERWALTETE DATEI — NICHT LOKAL ÄNDERN!
+# Wird aus cors-gmbh/shared-workflows-private per File-Sync verteilt (templates/harness/, Gruppe
+# "Dev-Harness der Bundle-Repos"); lokale Änderungen überschreibt der nächste Sync-Lauf per PR.
+# Repo-eigene Ergänzungen gehören in compose.override.yaml, config/local/ bzw. eigene Dateien.
+
 imports:
     - { resource: ../dev/config.yaml }
-    - { resource: ../../services_test.yaml }
-    - { resource: '../../../tests/DataDefinitionsBundle/Behat/Resources/config/services.yml' }
 
 doctrine:
     dbal:
@@ -17,18 +20,4 @@ doctrine:
 parameters:
     pimcore_test.db.dsn: '%env(PIMCORE_TEST_DB_DSN)%'
     env(PIMCORE_TEST_DB_DSN): ~
-
-framework:
-    session:
-        handler_id: 'Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler'
-    cache:
-        app: cache.adapter.filesystem
-
-data_definitions:
-    config_location:
-        import_definitions:
-            write_target:
-                type: settings-store
-        export_definitions:
-            write_target:
-                type: settings-store
+    pimcore.encryption.secret: 'def00000fc1e34a17a03e2ef85329325b0736a5941633f8062f6b0a1a20f416751af119256bea0abf83ac33ef656b3fff087e1ce71fa6b8810d7f854fe2781f3fe4507f6'

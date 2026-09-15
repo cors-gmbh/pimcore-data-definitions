@@ -1,0 +1,34 @@
+# Files that are not part of the distributed composer package (cors/data-definitions).
+# The bundle itself is src (+ composer.json, README.md, docs/, LICENSE.md);
+# everything below only serves the dev harness, the CI, the Behat suites or the Studio frontend build.
+/dev                                    export-ignore
+/tests                                  export-ignore
+/features                               export-ignore
+/etc                                    export-ignore
+/config                                 export-ignore
+/bin                                    export-ignore
+/var                                    export-ignore
+/public                                 export-ignore
+/templates                              export-ignore
+/Kernel.php                             export-ignore
+/behat.yml.dist                         export-ignore
+/behat-bootstrap.php                    export-ignore
+/docker-compose.yaml                    export-ignore
+/compose.override.yaml                  export-ignore
+/.env                                   export-ignore
+/.env.local                             export-ignore
+/.gitattributes                         export-ignore
+/.gitignore                             export-ignore
+/.github                                export-ignore
+/ecs.php                                export-ignore
+/phpstan.neon                           export-ignore
+/psalm.xml                              export-ignore
+/ISSUE_TEMPLATE.md                      export-ignore
+/PULL_REQUEST_TEMPLATE.md               export-ignore
+/package.json                           export-ignore
+/package-lock.json                      export-ignore
+/rsbuild.config.ts                      export-ignore
+/tsconfig.json                          export-ignore
+# Placeholder so the synced Static Tests lint path (src/Resources/config) exists; the bundle config
+# lives in src/Resources/config
+/src/Resources                          export-ignore

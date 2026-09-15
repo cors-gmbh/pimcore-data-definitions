@@ -1,0 +1,27 @@
+# Repo-specific test configuration for the Behat suites (features/). Lives next to the synced
+# config.yaml so that the synced file stays byte-identical to the template.
+imports:
+    - { resource: '../../../tests/DataDefinitionsBundle/Behat/Resources/config/services.yml' }
+
+parameters:
+    # The synced test/config.yaml pins pimcore.encryption.secret to a dummy key; Pimcore validates the
+    # product key against this parameter, so the registered secret must win (files load alphabetically).
+    pimcore.encryption.secret: '%env(PIMCORE_ENCRYPTION_SECRET)%'
+
+services:
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler: ~
+
+framework:
+    session:
+        handler_id: 'Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler'
+    cache:
+        app: cache.adapter.filesystem
+
+data_definitions:
+    config_location:
+        import_definitions:
+            write_target:
+                type: settings-store
+        export_definitions:
+            write_target:
+                type: settings-store

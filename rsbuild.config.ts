@@ -35,7 +35,7 @@ function computeBuildId (): string {
   const hash = crypto.createHash('sha256')
   const inputs = [
     ...['package.json', 'package-lock.json', 'rsbuild.config.ts'].map((f) => path.resolve(__dirname, f)),
-    ...collectFiles(path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/assets/pimcore-studio')).sort()
+    ...collectFiles(path.resolve(__dirname, 'src/Resources/assets/pimcore-studio')).sort()
   ]
   for (const file of inputs) {
     if (!fs.existsSync(file)) continue
@@ -47,12 +47,12 @@ function computeBuildId (): string {
 
 const buildId = process.env.PIMCORE_BUILD_ID || (process.env.NODE_ENV === 'dev-server' ? 'dev' : computeBuildId())
 const bundlePrefix = 'datadefinitions'
-const studioAssetsPath = path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/assets/pimcore-studio')
-const buildPath = path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/public/studio', buildId)
+const studioAssetsPath = path.resolve(__dirname, 'src/Resources/assets/pimcore-studio')
+const buildPath = path.resolve(__dirname, 'src/Resources/public/studio', buildId)
 const entryFile = path.resolve(studioAssetsPath, 'src/main.ts')
 
 // Clean old build directories
-const studioPath = path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/public/studio')
+const studioPath = path.resolve(__dirname, 'src/Resources/public/studio')
 if (fs.existsSync(studioPath)) {
   fs.readdirSync(studioPath).forEach((file) => {
     const filePath = path.resolve(studioPath, file)

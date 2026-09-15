@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- Public repository: cors/dev (private Packagist) is not reachable from GitHub Actions here,
+     so the shared issue handlers come from the public coreshop/test-setup package. -->
+<psalm xmlns:xi="http://www.w3.org/2001/XInclude" errorLevel="7">
+    <xi:include
+            href="vendor/coreshop/test-setup/psalm.xml"
+            xpointer="xpointer(/psalm/*[not(self::projectFiles)])"
+    />
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <!-- Optional CoreShop integrations: only loaded when the CoreShop components are installed -->
+            <directory name="src/Interpreter/CoreShop" />
+            <directory name="src/Setter/CoreShop" />
+            <directory name="src/Form/Type/Interpreter/CoreShop" />
+            <directory name="src/Form/Type/Setter/CoreShop" />
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <!-- The code base predates PHP 8.3 #[\Override]; report only -->
+        <MissingOverrideAttribute errorLevel="info" />
+        <ParamNameMismatch errorLevel="info" />
+        <MissingTemplateParam errorLevel="info" />
+        <NoValue errorLevel="info" />
+        <UndefinedMagicMethod errorLevel="info" />
+        <UndefinedDocblockClass errorLevel="info" />
+        <MethodSignatureMismatch errorLevel="info" />
+        <InvalidCatch errorLevel="info" />
+        <!-- The coreshop/test-setup base only lists specific deprecated/internal symbols; the legacy code base
+             still uses Request::get(), league/csv factories and Pimcore internals, so report them only -->
+        <DeprecatedClass errorLevel="info" />
+        <DeprecatedMethod errorLevel="info" />
+        <DeprecatedInterface errorLevel="info" />
+        <DeprecatedTrait errorLevel="info" />
+        <InternalMethod errorLevel="info" />
+        <InternalClass errorLevel="info" />
+    </issueHandlers>
+</psalm>

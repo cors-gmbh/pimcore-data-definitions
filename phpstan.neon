@@ -1,18 +1,22 @@
+# Public repository: cors/dev (private Packagist) is not reachable from GitHub Actions here,
+# so the shared rule set comes from the public coreshop/test-setup package.
+includes:
+    - vendor/coreshop/test-setup/phpstan.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-webmozart-assert/extension.neon
+
 parameters:
+    # The legacy code base is analysed at level 3; raise it together with the fixes.
     level: 3
-    reportUnmatchedIgnoredErrors: false
 
     paths:
-        - src/DataDefinitionsBundle
+        - src
 
     symfony:
         containerXmlPath: var/cache/dev/KernelDevDebugContainer.xml
 
     excludePaths:
-        # Makes PHPStan crash
-        - '**/DependencyInjection/Configuration.php'
-        - '**/Migrations/Version*.php'
-        # Ignore cause the file uses external dependencies and will only be used if those dependencies are met
+        # Optional integrations, only used when the third-party package is installed
         - '**/CoreShop/*.php'
         - '**/Dao.php'
 
@@ -20,18 +24,7 @@ parameters:
         # Magic calls
         - '/Call to an undefined static method Webmozart\\Assert\\Assert::all/'
         - '/Call to an undefined static method Webmozart\\Assert\\Assert::nullOr/'
-        - '/Call to an undefined method Faker\\Generator::/'
-        - '/Access to an undefined property Faker\\Generator::/'
-        - '/Constant PIMCORE_SYSTEM_TEMP_DIRECTORY not found./'
-        - '/Constant PIMCORE_CONFIGURATION_DIRECTORY not found./'
-        - '/Constant PIMCORE_CLASS_DIRECTORY not found./'
-        - '/Constant PIMCORE_WEB_ROOT not found./'
-        - '/Constant PIMCORE_DEVMODE not found./'
         - '/Class Zend_Paginator_Adapter_Interface not found and could not be autoloaded./'
-
-        - '/Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)/'
-        - '/Call to an undefined method Pimcore\\Model\\\(.*\)::save\(\)./'
-        - '/Call to an undefined method Pimcore\\Model\\\(.*\)::delete\(\)./'
         - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log\\Listing::load\(\)./'
         - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log\\Listing::getTotalCount\(\)./'
         - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log::delete\(\)./'
@@ -39,8 +32,3 @@ parameters:
         - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log::getById\(\)./'
         - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\ExportDefinition\\Listing::load\(\)./'
         - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\ImportDefinition\\Listing::load\(\)./'
-
-includes:
-    - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-webmozart-assert/extension.neon
