@@ -101,11 +101,13 @@ jobs:
           composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
           composer update --no-progress --prefer-dist --optimize-autoloader --prefer-lowest
 
-      # The registration of the CI instance goes into .env.local, which is loaded after .env, before
-      # the first kernel boot. It is deliberately not part of the job env: a real environment variable
-      # wins over .env even when empty, so an unset secret would replace the committed default
-      # (e.g. PIMCORE_INSTANCE_IDENTIFIER) with an empty value. Empty values are dropped, like php-test does.
-      - name: Write .env.local
+      # The registration of the CI instance goes into dotenv files before the first kernel boot. It is
+      # deliberately not part of the job env: a real environment variable wins over .env even when empty,
+      # so an unset secret would replace the committed default (e.g. PIMCORE_INSTANCE_IDENTIFIER) with an
+      # empty value. Empty values are dropped, like php-test does. Two files are needed: bin/console runs
+      # with APP_ENV=test, where Symfony skips .env.local and reads .env.test.local; the Pimcore installer
+      # re-reads .env with override (APP_ENV=dev from .env) and then reads .env.local.
+      - name: Write .env.local and .env.test.local
         env:
           PIMCORE_ENCRYPTION_SECRET: ${{ secrets.PIMCORE_ENCRYPTION_SECRET }}
           PIMCORE_INSTANCE_IDENTIFIER: ${{ secrets.PIMCORE_INSTANCE_IDENTIFIER }}
@@ -116,7 +118,8 @@ jobs:
             "PIMCORE_INSTANCE_IDENTIFIER=${PIMCORE_INSTANCE_IDENTIFIER}" \
             "PIMCORE_PRODUCT_KEY=${PIMCORE_PRODUCT_KEY}" \
             | grep -Ev '^[A-Za-z_][A-Za-z0-9_]*=\s*$' > .env.local || true
-          echo "Wrote .env.local ($(grep -c '=' .env.local) variables)"
+          cp .env.local .env.test.local
+          echo "Wrote .env.local and .env.test.local ($(grep -c '=' .env.local) variables)"
 
       - name: Cache clear
         run: bin/console cache:clear
