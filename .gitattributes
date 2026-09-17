@@ -29,6 +29,3 @@
 /package-lock.json                      export-ignore
 /rsbuild.config.ts                      export-ignore
 /tsconfig.json                          export-ignore
-# Placeholder so the synced Static Tests lint path (src/Resources/config) exists; the bundle config
-# lives in src/Resources/config
-/src/Resources                          export-ignore
