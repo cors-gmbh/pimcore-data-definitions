@@ -135,6 +135,8 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
     public function doImport(ImportDefinitionInterface $definition, $params): array
     {
         $filter = null;
+        // the service is shared, a stop of a previous run in a long-running worker must not affect this one
+        $this->shouldStop = false;
 
         if ($definition->getCreateVersion()) {
             Version::enable();
@@ -178,7 +180,10 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         }
 
         $cleanerType = $definition->getCleaner();
-        if ($cleanerType) {
+        if ($cleanerType && $this->shouldStop) {
+            // the object list of a stopped import is incomplete, cleaning up would remove objects of unprocessed rows
+            $this->logger->warning(sprintf('Import has been stopped, skipping Cleaner "%s"', $cleanerType));
+        } elseif ($cleanerType) {
             $cleaner = $this->cleanerRegistry->get($cleanerType);
 
             $this->logger->info(sprintf('Running Cleaner "%s"', $cleanerType));
@@ -229,7 +234,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $objectIds,
             $exceptions,
         );
-        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', '', $params);
     }
 
     public function processFailedImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
@@ -244,7 +249,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $objectIds,
             $exceptions,
         );
-        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', '', $params);
     }
 
     public function stop(): void
@@ -322,7 +327,10 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $objectIds[] = $object->getId();
                 }
             } catch (Throwable $ex) {
-                $this->logger->error($ex);
+                $this->logger->error(
+                    sprintf('Row %d: %s', $count, $ex->getMessage()),
+                    ['exception' => $ex, 'row' => $row],
+                );
 
                 $exceptions[] = $ex;
 
@@ -385,6 +393,12 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     'Ignoring new Object',
                     $params,
                 );
+                $this->eventDispatcher->dispatch(
+                    $definition,
+                    'data_definitions.import.object.skipped',
+                    'Ignoring new Object',
+                    $params,
+                );
 
                 return null;
             }
@@ -393,6 +407,12 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                 $this->eventDispatcher->dispatch(
                     $definition,
                     'data_definitions.import.status',
+                    'Ignoring existing Object',
+                    $params,
+                );
+                $this->eventDispatcher->dispatch(
+                    $definition,
+                    'data_definitions.import.object.skipped',
                     'Ignoring existing Object',
                     $params,
                 );
@@ -412,6 +432,12 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                 $this->eventDispatcher->dispatch(
                     $definition,
                     'data_definitions.import.status',
+                    'Filtered Object',
+                    $params,
+                );
+                $this->eventDispatcher->dispatch(
+                    $definition,
+                    'data_definitions.import.object.skipped',
                     'Filtered Object',
                     $params,
                 );
@@ -482,6 +508,12 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $this->eventDispatcher->dispatch(
                 $definition,
                 'data_definitions.import.status',
+                sprintf('Skipped Object %s', $object->getFullPath()),
+                $params,
+            );
+            $this->eventDispatcher->dispatch(
+                $definition,
+                'data_definitions.import.object.skipped',
                 sprintf('Skipped Object %s', $object->getFullPath()),
                 $params,
             );

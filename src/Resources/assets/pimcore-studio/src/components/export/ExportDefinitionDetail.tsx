@@ -11,6 +11,7 @@ import { ExportSettingsForm } from './components/ExportSettingsForm'
 import { ExportMappingPanel } from './components/ExportMappingPanel'
 import { ProviderConfig } from '../providers'
 import { useStyles } from './ExportDefinitionDetail.styles'
+import { RunHistory } from '../runs'
 
 interface ExportDefinitionDetailProps {
   definition: ExportDefinition
@@ -76,7 +77,14 @@ export const ExportDefinitionDetail: React.FC<ExportDefinitionDetailProps> = ({
           onChange={onChange}
         />
       )
-    }
+    },
+    ...(definition.id !== undefined
+      ? [{
+          key: 'runs',
+          label: t('data_definitions.runs.title'),
+          children: <RunHistory type="export" definitionId={definition.id} definitionName={definition.name} />
+        }]
+      : [])
   ]
 
   return (

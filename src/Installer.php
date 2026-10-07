@@ -32,6 +32,12 @@ final class Installer extends SettingsStoreAwareInstaller
         parent::install();
     }
 
+    #[\Override]
+    public function getLastMigrationVersionClassName(): ?string
+    {
+        return Migrations\Version20261007000000::class;
+    }
+
     public function uninstall(): void
     {
         parent::uninstall();

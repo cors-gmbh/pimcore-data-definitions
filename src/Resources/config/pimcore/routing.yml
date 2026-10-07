@@ -65,3 +65,53 @@ data_definitions_admin_export_import_rules:
 data_definitions_admin_import_import_rules:
   path: /pimcore-studio/api/data-definitions/import-rules/import
   defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\ImportRuleController::importAction }
+
+data_definitions_runs_params_schema:
+  path: /pimcore-studio/api/data-definitions/runs/params-schema
+  methods: [GET]
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::paramsSchemaAction }
+
+data_definitions_runs_start:
+  path: /pimcore-studio/api/data-definitions/runs/start
+  methods: [POST]
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::startAction }
+
+data_definitions_runs_upload:
+  path: /pimcore-studio/api/data-definitions/runs/upload
+  methods: [POST]
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::uploadAction }
+
+data_definitions_runs_list:
+  path: /pimcore-studio/api/data-definitions/runs
+  methods: [GET]
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::listAction }
+
+data_definitions_runs_get:
+  path: /pimcore-studio/api/data-definitions/runs/{id}
+  methods: [GET]
+  requirements: { id: '\d+' }
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::getAction }
+
+data_definitions_runs_logs:
+  path: /pimcore-studio/api/data-definitions/runs/{id}/logs
+  methods: [GET]
+  requirements: { id: '\d+' }
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::logsAction }
+
+data_definitions_runs_stop:
+  path: /pimcore-studio/api/data-definitions/runs/{id}/stop
+  methods: [POST]
+  requirements: { id: '\d+' }
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::stopAction }
+
+data_definitions_runs_rerun:
+  path: /pimcore-studio/api/data-definitions/runs/{id}/rerun
+  methods: [POST]
+  requirements: { id: '\d+' }
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::rerunAction }
+
+data_definitions_runs_delete:
+  path: /pimcore-studio/api/data-definitions/runs/{id}
+  methods: [DELETE]
+  requirements: { id: '\d+' }
+  defaults: { _controller: Instride\Bundle\DataDefinitionsBundle\Controller\RunController::deleteAction }

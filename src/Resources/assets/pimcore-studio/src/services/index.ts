@@ -2,4 +2,4 @@
  * Data Definitions Services Export
  */
 
-export { importDefinitionApi, exportDefinitionApi, ImportDefinitionApi, ExportDefinitionApi } from './api'
+export { importDefinitionApi, exportDefinitionApi, ImportDefinitionApi, ExportDefinitionApi, runApi } from './api'

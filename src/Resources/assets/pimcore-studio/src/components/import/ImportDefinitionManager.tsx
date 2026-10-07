@@ -9,6 +9,7 @@ import { TabbedEntityManager } from '../shared/TabbedEntityManager'
 import { importDefinitionApi } from '../../services/api'
 import type { ImportDefinition, DefinitionConfig } from '../../types/definitions'
 import { ImportDefinitionDetail } from './ImportDefinitionDetail'
+import { StartRunButton } from '../runs'
 
 export const ImportDefinitionManager: React.FC = () => {
   const { t } = useTranslation()
@@ -77,6 +78,9 @@ export const ImportDefinitionManager: React.FC = () => {
       onAdd={handleAdd}
       buildSavePayload={buildSavePayload}
       getTabTitle={(item) => item.name || `#${item.id}`}
+      renderFooterExtra={(data, dirty) => (
+        <StartRunButton type="import" definitionId={data.id} definitionName={data.name} dirty={dirty} />
+      )}
       renderDetail={(data, setData) => {
         if (!config) return null
         return (

@@ -17,15 +17,30 @@ namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 use function chr;
 use function count;
 use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamField;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
 
 final class CsvProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface
 {
+    #[\Override]
+    public function getParamsSchema(DataDefinitionInterface $definition): array
+    {
+        $fields = parent::getParamsSchema($definition);
+
+        if ($definition instanceof ImportDefinitionInterface) {
+            $fields[] = new ParamField('offset', 'number', 'Offset', description: 'Skip the first n rows', group: 'source');
+            $fields[] = new ParamField('limit', 'number', 'Limit', description: 'Import at most n rows', group: 'source');
+        }
+
+        return $fields;
+    }
+
     private array $exportData = [];
 
     #[\Override]

@@ -13,6 +13,7 @@ import { type IAbstractPlugin } from '@pimcore/studio-ui-bundle'
 import { DataDefinitionsMenuModule } from './modules/menu'
 import { DataDefinitionsIconModule } from './modules/icon-library'
 import { DataDefinitionsRegistryModule } from './modules/registry-module'
+import { DataDefinitionsRunUpdatesModule } from './modules/run-updates'
 
 const DataDefinitionsPlugin: IAbstractPlugin = {
   name: 'data-definitions',
@@ -20,6 +21,9 @@ const DataDefinitionsPlugin: IAbstractPlugin = {
   onInit(): void {
     // Initialize registries before other modules load
     DataDefinitionsRegistryModule.onInit()
+
+    // Live run updates (Mercure), topics must be known before the global subscription starts
+    DataDefinitionsRunUpdatesModule.onInit()
   },
 
   onStartup({ moduleSystem }): void {

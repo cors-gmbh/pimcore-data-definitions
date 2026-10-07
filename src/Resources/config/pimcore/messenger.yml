@@ -13,6 +13,13 @@ framework:
                 dsn: "doctrine://default?queue_name=data_definitions_import_failed"
                 retry_strategy:
                     max_retries: 0
+            # whole import/export runs, executed by: bin/console messenger:consume data_definitions_run
+            # never retried: a failed run is recorded as "failed" in the run history and can be re-run from Studio
+            data_definitions_run:
+                dsn: "doctrine://default?queue_name=data_definitions_run"
+                retry_strategy:
+                    max_retries: 0
 
         routing:
             'Instride\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessage': data_definitions_import
+            'Instride\Bundle\DataDefinitionsBundle\Messenger\ExecuteRunMessage': data_definitions_run

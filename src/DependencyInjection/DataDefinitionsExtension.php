@@ -121,7 +121,16 @@ final class DataDefinitionsExtension extends AbstractModelExtension implements P
         $container->setParameter('data_definitions.config_location', $config['config_location'] ?? []);
 
         $container->setParameter('data_definitions.import_definitions', $config['import_definitions']);
+        $container->setParameter('data_definitions.runs.log_level', $config['runs']['log_level']);
+        $container->setParameter('data_definitions.runs.max_log_entries', $config['runs']['max_log_entries']);
+        $container->setParameter('data_definitions.runs.retention_days', $config['runs']['retention_days']);
+        $container->setParameter('data_definitions.runs.upload_folder', $config['runs']['upload_folder']);
         $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
+
+        // Live run updates through the Studio Mercure hub
+        if (interface_exists(\Pimcore\Bundle\StudioBackendBundle\Mercure\Service\PublishServiceInterface::class)) {
+            $loader->load('services/studio_mercure.yaml');
+        }
 
         // Load Studio UI integration if available
         if (interface_exists(\Pimcore\Bundle\StudioUiBundle\Webpack\WebpackEntryPointProviderInterface::class)) {

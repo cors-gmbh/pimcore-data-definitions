@@ -9,6 +9,7 @@ import { TabbedEntityManager } from '../shared/TabbedEntityManager'
 import { exportDefinitionApi } from '../../services/api'
 import type { ExportDefinition, DefinitionConfig } from '../../types/definitions'
 import { ExportDefinitionDetail } from './ExportDefinitionDetail'
+import { StartRunButton } from '../runs'
 
 export const ExportDefinitionManager: React.FC = () => {
   const { t } = useTranslation()
@@ -77,6 +78,9 @@ export const ExportDefinitionManager: React.FC = () => {
       onAdd={handleAdd}
       buildSavePayload={buildSavePayload}
       getTabTitle={(item) => item.name || `#${item.id}`}
+      renderFooterExtra={(data, dirty) => (
+        <StartRunButton type="export" definitionId={data.id} definitionName={data.name} dirty={dirty} />
+      )}
       renderDetail={(data, setData) => {
         if (!config) return null
         return (

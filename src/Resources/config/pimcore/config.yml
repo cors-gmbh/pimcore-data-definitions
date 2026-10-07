@@ -1,5 +1,7 @@
 imports:
   - { resource: messenger.yml }
+  - { resource: doctrine_migrations.yml }
+  - { resource: doctrine.yml }
 
 jms_serializer:
   metadata:

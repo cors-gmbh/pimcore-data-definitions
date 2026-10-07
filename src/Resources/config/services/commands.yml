@@ -16,6 +16,7 @@ services:
       - '@event_dispatcher'
       - '@data_definitions.repository.import_definition'
       - '@Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunManager'
     tags:
       - { name: 'console.command', command: 'data-definitions:import' }
 
@@ -32,6 +33,7 @@ services:
       - '@event_dispatcher'
       - '@data_definitions.repository.export_definition'
       - '@Instride\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface'
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunManager'
     tags:
       - { name: 'console.command', command: 'data-definitions:export' }
 

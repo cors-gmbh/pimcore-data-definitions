@@ -57,6 +57,10 @@ final class Exporter implements ExporterInterface
 
     public function doExport(ExportDefinitionInterface $definition, array $params)
     {
+        // the service is shared, a previous run in a long-running worker must not affect this one
+        $this->shouldStop = false;
+        $this->exceptions = [];
+
         $fetcherContext = $this->contextFactory->createFetcherContext($definition, $params, is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
         $fetcher = $this->getFetcher($definition);
@@ -146,7 +150,10 @@ final class Exporter implements ExporterInterface
 
                             ++$count;
                         } catch (Exception $ex) {
-                            $this->logger->error($ex);
+                            $this->logger->error(
+                                sprintf('Object %s: %s', $object->getId(), $ex->getMessage()),
+                                ['exception' => $ex],
+                            );
 
                             $this->exceptions[] = $ex;
 
@@ -157,6 +164,14 @@ final class Exporter implements ExporterInterface
                                     $params,
                                 ),
                                 'data_definitions.export.status',
+                            );
+                            $this->eventDispatcher->dispatch(
+                                new ExportDefinitionEvent(
+                                    $definition,
+                                    sprintf('Error: %s', $ex->getMessage()),
+                                    $params,
+                                ),
+                                'data_definitions.export.failure',
                             );
 
                             if ($definition->getStopOnException()) {

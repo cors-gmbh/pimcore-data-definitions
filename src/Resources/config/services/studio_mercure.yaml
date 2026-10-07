@@ -1,0 +1,14 @@
+# Live run updates via the Studio Mercure hub, loaded when pimcore/studio-backend-bundle is installed
+services:
+  Instride\Bundle\DataDefinitionsBundle\Run\Notifier\RunNotifierInterface: '@Instride\Bundle\DataDefinitionsBundle\Studio\Mercure\MercureRunNotifier'
+
+  Instride\Bundle\DataDefinitionsBundle\Studio\Mercure\MercureRunNotifier:
+    arguments:
+      - '@Pimcore\Bundle\StudioBackendBundle\Mercure\Service\PublishServiceInterface'
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunNormalizer'
+
+  Instride\Bundle\DataDefinitionsBundle\Studio\Mercure\RunTopicProvider:
+    arguments:
+      - '@Pimcore\Bundle\StudioBackendBundle\Security\Service\SecurityServiceInterface'
+    tags:
+      - { name: pimcore.studio_backend.mercure.topic.provider }
