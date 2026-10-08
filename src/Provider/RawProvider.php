@@ -16,11 +16,21 @@ namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 
 use function count;
 use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamField;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamsSchemaProviderInterface;
 
-final class RawProvider implements ImportProviderInterface
+final class RawProvider implements ImportProviderInterface, ParamsSchemaProviderInterface
 {
+    public function getParamsSchema(DataDefinitionInterface $definition): array
+    {
+        return [
+            new ParamField('data', 'json', 'Data', true, [], 'Rows to import, a JSON array of objects', group: 'source'),
+        ];
+    }
+
     #[\Override]
     public function testData(array $configuration): bool
     {

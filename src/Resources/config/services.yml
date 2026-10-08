@@ -3,6 +3,7 @@ imports:
   - { resource: "services/installer.yml" }
   - { resource: "services/commands.yml" }
   - { resource: "services/import_rules.yml" }
+  - { resource: "services/runs.yml" }
 
 services:
     Instride\Bundle\DataDefinitionsBundle\Event\EventDispatcher:

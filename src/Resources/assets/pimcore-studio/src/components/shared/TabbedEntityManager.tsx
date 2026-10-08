@@ -34,6 +34,8 @@ export interface TabbedEntityManagerProps<T extends EntityWithId> {
   buildSavePayload?: (data: T) => Record<string, any>
   renderDetail: (data: T, setData: (data: T) => void) => React.ReactNode
   getTabTitle?: (item: T) => string
+  /** additional footer actions next to "Save", e.g. starting a run */
+  renderFooterExtra?: (data: T, dirty: boolean) => React.ReactNode
 }
 
 const useStyles = createStyles(({ css, token }) => ({
@@ -128,7 +130,8 @@ export function TabbedEntityManager<T extends EntityWithId>({
   onAdd,
   buildSavePayload,
   renderDetail,
-  getTabTitle
+  getTabTitle,
+  renderFooterExtra
 }: TabbedEntityManagerProps<T>): React.ReactElement {
   const { t } = useTranslation()
   const { styles } = useStyles()
@@ -295,6 +298,7 @@ export function TabbedEntityManager<T extends EntityWithId>({
           ) : null}
         </div>
         <div className={styles.footer}>
+          {tab.data && renderFooterExtra ? renderFooterExtra(tab.data, tab.dirty) : null}
           <Button
             type="primary"
             icon={<SaveOutlined />}

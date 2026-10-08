@@ -15,10 +15,12 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
+use Instride\Bundle\DataDefinitionsBundle\Entity\Run;
 use Instride\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 use Instride\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Instride\Bundle\DataDefinitionsBundle\Run\RunManager;
 use Pimcore\Console\AbstractCommand;
 use Pimcore\Model\Exception\NotFoundException;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -29,6 +31,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ExportCommand extends AbstractCommand
 {
+    use RunCommandTrait;
+
     protected EventDispatcherInterface $eventDispatcher;
 
     protected DefinitionRepository $repository;
@@ -39,6 +43,7 @@ final class ExportCommand extends AbstractCommand
         EventDispatcherInterface $eventDispatcher,
         DefinitionRepository $repository,
         ExporterInterface $exporter,
+        private RunManager $runManager,
     ) {
         parent::__construct();
 
@@ -71,6 +76,8 @@ EOT
                 'JSON Encoded Params',
             )
         ;
+
+        $this->addRunOptions();
     }
 
     #[\Override]
@@ -78,7 +85,7 @@ EOT
     {
         $eventDispatcher = $this->eventDispatcher;
 
-        $params = json_decode($input->getOption('params'), true);
+        $params = json_decode((string) $input->getOption('params'), true);
         $definitionId = $input->getOption('definition');
 
         $definition = null;
@@ -142,13 +149,23 @@ EOT
         $eventDispatcher->addListener('data_definitions.export.progress', $imProgress);
         $eventDispatcher->addListener('data_definitions.export.finished', $imFinished);
 
-        $this->exporter->doExport($definition, $params);
+        try {
+            $result = $this->executeAsRun(
+                $this->runManager,
+                Run::TYPE_EXPORT,
+                $definition,
+                $params,
+                $input,
+                $output,
+                fn (array $params) => $this->exporter->doExport($definition, $params),
+            );
+        } finally {
+            $eventDispatcher->removeListener('data_definitions.export.status', $imStatus);
+            $eventDispatcher->removeListener('data_definitions.export.total', $imTotal);
+            $eventDispatcher->removeListener('data_definitions.export.progress', $imProgress);
+            $eventDispatcher->removeListener('data_definitions.export.finished', $imFinished);
+        }
 
-        $eventDispatcher->removeListener('data_definitions.export.status', $imStatus);
-        $eventDispatcher->removeListener('data_definitions.export.total', $imTotal);
-        $eventDispatcher->removeListener('data_definitions.export.progress', $imProgress);
-        $eventDispatcher->removeListener('data_definitions.export.finished', $imFinished);
-
-        return 0;
+        return $result;
     }
 }

@@ -14,17 +14,34 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 
+use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamField;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamsSchemaProviderInterface;
 use Instride\Bundle\DataDefinitionsBundle\Service\StorageLocator;
 use Pimcore\File;
 use Pimcore\Helper\LongRunningHelper;
 use Pimcore\Model\Asset;
 
-abstract class AbstractFileProvider
+abstract class AbstractFileProvider implements ParamsSchemaProviderInterface
 {
     public function __construct(
         protected StorageLocator $storageLocator,
         protected LongRunningHelper $longRunningHelper,
     ) {
+    }
+
+    public function getParamsSchema(DataDefinitionInterface $definition): array
+    {
+        if (!$definition instanceof ImportDefinitionInterface) {
+            return [];
+        }
+
+        return [
+            new ParamField('asset', 'asset', 'Asset', description: 'Asset path of the file to import, or upload a file', group: 'source'),
+            new ParamField('storage', 'text', 'Storage', description: 'Flysystem storage name, used together with "file"', group: 'source'),
+            new ParamField('file', 'text', 'File', description: 'Path of the file (inside the storage, or on the server when no storage is given)', group: 'source'),
+        ];
     }
 
     protected function getFile(array $params): string

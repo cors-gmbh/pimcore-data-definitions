@@ -10,6 +10,7 @@ import { MainNavRegistry, type IMainNavItem } from '@pimcore/studio-ui-bundle/mo
 import { WidgetRegistry } from '@pimcore/studio-ui-bundle/modules/widget-manager'
 import { ImportDefinitionManager } from '../components/import/ImportDefinitionManager'
 import { ExportDefinitionManager } from '../components/export/ExportDefinitionManager'
+import { RunsOverview } from '../components/runs/RunsOverview'
 
 export const DataDefinitionsMenuModule = {
   onInit(): void {
@@ -26,6 +27,12 @@ export const DataDefinitionsMenuModule = {
     widgetRegistry.registerWidget({
       name: 'data-definitions-export',
       component: ExportDefinitionManager
+    })
+
+    // Register run history widget (all import/export runs)
+    widgetRegistry.registerWidget({
+      name: 'data-definitions-runs',
+      component: RunsOverview
     })
 
     // Register main navigation group for Data Definitions. Sits under
@@ -79,5 +86,26 @@ export const DataDefinitionsMenuModule = {
       }
     }
     mainNavRegistry.registerMainNavItem(exportNav)
+
+    // Register run history navigation item
+    const runsNav: IMainNavItem = {
+      path: 'AutomationIntegration/Data Definitions/Runs',
+      label: 'data_definitions.runs.title',
+      order: 30,
+      icon: 'data_definitions_icon_import_definition',
+      widgetConfig: {
+        name: 'Data Definition Runs',
+        id: 'data-definitions-runs',
+        component: 'data-definitions-runs',
+        config: {
+          translationKey: 'data_definitions.runs.title',
+          icon: {
+            type: 'name',
+            value: 'data_definitions_icon_import_definition'
+          }
+        }
+      }
+    }
+    mainNavRegistry.registerMainNavItem(runsNav)
   }
 }

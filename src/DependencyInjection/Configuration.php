@@ -61,7 +61,11 @@ final class Configuration implements ConfigurationInterface
                             ->children()
                                 ->arrayNode('sql')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(['@DataDefinitionsBundle/Resources/install/pimcore/sql/data.sql'])
+                                    ->defaultValue([
+                                        '@DataDefinitionsBundle/Resources/install/pimcore/sql/data.sql',
+                                        '@DataDefinitionsBundle/Resources/install/pimcore/sql/run.sql',
+                                        '@DataDefinitionsBundle/Resources/install/pimcore/sql/run_log.sql',
+                                    ])
                                 ->end()
                             ->end()
                         ->end()
@@ -149,6 +153,35 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                             ->integerNode('creationDate')->end()
                             ->integerNode('modificationDate')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        $rootNode
+            ->children()
+                ->arrayNode('runs')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->enumNode('log_level')
+                            ->values(['debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'])
+                            ->defaultValue('info')
+                            ->info('Minimum level of log records stored per run')
+                        ->end()
+                        ->integerNode('max_log_entries')
+                            ->defaultValue(50000)
+                            ->min(0)
+                            ->info('Maximum number of log records stored per run, 0 disables the limit')
+                        ->end()
+                        ->integerNode('retention_days')
+                            ->defaultValue(30)
+                            ->min(0)
+                            ->info('Runs older than this are removed by the maintenance task, 0 keeps them forever')
+                        ->end()
+                        ->scalarNode('upload_folder')
+                            ->defaultValue('/Data Definitions/Uploads')
+                            ->info('Asset folder used for files uploaded when starting a run from Studio')
                         ->end()
                     ->end()
                 ->end()

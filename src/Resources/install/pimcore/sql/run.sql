@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS `data_definitions_run`
+(
+    `id`            INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `type`          VARCHAR(16)  NOT NULL,
+    `definition`    INT          NOT NULL,
+    `status`        VARCHAR(32)  NOT NULL,
+    `trigger_type`  VARCHAR(32)  NOT NULL,
+    `user_id`       INT          NULL,
+    `params`        LONGTEXT     NULL,
+    `total`         INT UNSIGNED NULL,
+    `processed`     INT UNSIGNED NOT NULL DEFAULT 0,
+    `created_count` INT UNSIGNED NOT NULL DEFAULT 0,
+    `updated_count` INT UNSIGNED NOT NULL DEFAULT 0,
+    `skipped_count` INT UNSIGNED NOT NULL DEFAULT 0,
+    `error_count`   INT UNSIGNED NOT NULL DEFAULT 0,
+    `log_count`     INT UNSIGNED NOT NULL DEFAULT 0,
+    `message`       TEXT         NULL,
+    `hostname`      VARCHAR(255) NULL,
+    `pid`           INT          NULL,
+    `created_at`    INT UNSIGNED NOT NULL,
+    `started_at`    INT UNSIGNED NULL,
+    `finished_at`   INT UNSIGNED NULL,
+    INDEX `idx_definition` (`type`, `definition`, `created_at`),
+    INDEX `idx_status` (`status`)
+) DEFAULT CHARSET = utf8mb4;

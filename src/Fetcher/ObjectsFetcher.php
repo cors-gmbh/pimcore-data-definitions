@@ -15,20 +15,40 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Fetcher;
 
 use Instride\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamField;
+use Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamsSchemaProviderInterface;
 use InvalidArgumentException;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Listing;
 
-final class ObjectsFetcher implements FetcherInterface
+final class ObjectsFetcher implements FetcherInterface, ParamsSchemaProviderInterface
 {
+    public function getParamsSchema(DataDefinitionInterface $definition): array
+    {
+        return [
+            new ParamField('root', 'object', 'Root', description: 'Only export objects below this object (ID)', group: 'filter'),
+            new ParamField('only_direct_children', 'boolean', 'Only direct children', group: 'filter'),
+            new ParamField('query', 'text', 'Search query', description: 'Full text search', group: 'filter'),
+            new ParamField('condition', 'text', 'Condition', description: 'SQL condition on the object listing', group: 'filter'),
+            new ParamField('ids', 'json', 'IDs', description: 'JSON array of object IDs', group: 'filter'),
+        ];
+    }
+
     private Listing $list;
+
+    /**
+     * The listing is cached per fetcher context (= per export run), a shared service in a long-running
+     * worker must not reuse the listing of a previous run.
+     */
+    private ?FetcherContextInterface $listContext = null;
 
     #[\Override]
     public function fetch(FetcherContextInterface $context, int $limit, int $offset)
     {
-        $list = $this->getClassListing($context->getDefinition(), $context->getParams());
+        $list = $this->getListing($context);
         $list->setLimit($limit);
         $list->setOffset($offset);
 
@@ -37,7 +57,17 @@ final class ObjectsFetcher implements FetcherInterface
 
     public function count(FetcherContextInterface $context): int
     {
-        return $this->getClassListing($context->getDefinition(), $context->getParams())->getTotalCount();
+        return $this->getListing($context)->getTotalCount();
+    }
+
+    private function getListing(FetcherContextInterface $context): Listing
+    {
+        if ($this->listContext !== $context) {
+            unset($this->list);
+            $this->listContext = $context;
+        }
+
+        return $this->getClassListing($context->getDefinition(), $context->getParams());
     }
 
     private function getClassListing(ExportDefinitionInterface $definition, array $params): Listing

@@ -15,10 +15,12 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
+use Instride\Bundle\DataDefinitionsBundle\Entity\Run;
 use Instride\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Instride\Bundle\DataDefinitionsBundle\Run\RunManager;
 use Pimcore\Console\AbstractCommand;
 use Pimcore\Model\Exception\NotFoundException;
 use Symfony\Component\Console\Helper\Helper;
@@ -30,6 +32,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ImportCommand extends AbstractCommand
 {
+    use RunCommandTrait;
+
     protected EventDispatcherInterface $eventDispatcher;
 
     protected DefinitionRepository $repository;
@@ -40,6 +44,7 @@ final class ImportCommand extends AbstractCommand
         EventDispatcherInterface $eventDispatcher,
         DefinitionRepository $repository,
         ImporterInterface $importer,
+        private RunManager $runManager,
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
@@ -70,8 +75,11 @@ EOT
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'JSON Encoded Params',
+                '{}',
             )
         ;
+
+        $this->addRunOptions();
     }
 
     #[\Override]
@@ -171,14 +179,24 @@ EOT
         $eventDispatcher->addListener('data_definitions.import.progress', $imProgress);
         $eventDispatcher->addListener('data_definitions.import.finished', $imFinished);
 
-        $this->importer->doImport($definition, $params);
+        try {
+            $result = $this->executeAsRun(
+                $this->runManager,
+                Run::TYPE_IMPORT,
+                $definition,
+                $params,
+                $input,
+                $output,
+                fn (array $params) => $this->importer->doImport($definition, $params),
+            );
+        } finally {
+            $eventDispatcher->removeListener('data_definitions.import.status', $imStatus);
+            $eventDispatcher->removeListener('data_definitions.import.status.child', $imStatus);
+            $eventDispatcher->removeListener('data_definitions.import.total', $imTotal);
+            $eventDispatcher->removeListener('data_definitions.import.progress', $imProgress);
+            $eventDispatcher->removeListener('data_definitions.import.finished', $imFinished);
+        }
 
-        $eventDispatcher->removeListener('data_definitions.import.status', $imStatus);
-        $eventDispatcher->removeListener('data_definitions.import.status.child', $imStatus);
-        $eventDispatcher->removeListener('data_definitions.import.total', $imTotal);
-        $eventDispatcher->removeListener('data_definitions.import.progress', $imProgress);
-        $eventDispatcher->removeListener('data_definitions.import.finished', $imFinished);
-
-        return 0;
+        return $result;
     }
 }

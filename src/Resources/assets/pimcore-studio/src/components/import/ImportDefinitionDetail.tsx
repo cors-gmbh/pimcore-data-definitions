@@ -11,6 +11,7 @@ import { SettingsForm } from './components/SettingsForm'
 import { MappingPanel } from './components/MappingPanel'
 import { ProviderConfig } from '../providers'
 import { useStyles } from './ImportDefinitionDetail.styles'
+import { RunHistory } from '../runs'
 
 interface ImportDefinitionDetailProps {
   definition: ImportDefinition
@@ -76,7 +77,14 @@ export const ImportDefinitionDetail: React.FC<ImportDefinitionDetailProps> = ({
           onChange={onChange}
         />
       )
-    }
+    },
+    ...(definition.id !== undefined
+      ? [{
+          key: 'runs',
+          label: t('data_definitions.runs.title'),
+          children: <RunHistory type="import" definitionId={definition.id} definitionName={definition.name} />
+        }]
+      : [])
   ]
 
   return (

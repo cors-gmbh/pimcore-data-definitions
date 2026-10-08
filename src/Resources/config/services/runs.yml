@@ -1,0 +1,79 @@
+services:
+  Instride\Bundle\DataDefinitionsBundle\Run\RunRepository:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@doctrine.dbal.default_connection'
+
+  Instride\Bundle\DataDefinitionsBundle\Run\Notifier\RunNotifierInterface: '@Instride\Bundle\DataDefinitionsBundle\Run\Notifier\NullRunNotifier'
+  Instride\Bundle\DataDefinitionsBundle\Run\Notifier\NullRunNotifier: ~
+
+  Instride\Bundle\DataDefinitionsBundle\Run\RunNormalizer:
+    arguments:
+      - '@data_definitions.repository.import_definition'
+      - '@data_definitions.repository.export_definition'
+
+  Instride\Bundle\DataDefinitionsBundle\Run\RunTracker:
+    arguments:
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunRepository'
+      - '@event_dispatcher'
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\Notifier\RunNotifierInterface'
+      - '%data_definitions.runs.max_log_entries%'
+
+  Instride\Bundle\DataDefinitionsBundle\Run\RunManager:
+    public: true
+    arguments:
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunRepository'
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunTracker'
+      - '@data_definitions.repository.import_definition'
+      - '@data_definitions.repository.export_definition'
+      - '@Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+      - '@Instride\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface'
+      - '@messenger.default_bus'
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\Notifier\RunNotifierInterface'
+
+  Instride\Bundle\DataDefinitionsBundle\Run\ParamsSchema\ParamsSchemaBuilder:
+    arguments:
+      - provider: '@data_definitions.registry.provider'
+        loader: '@data_definitions.registry.loader'
+        filter: '@data_definitions.registry.filter'
+        runner: '@data_definitions.registry.runner'
+        cleaner: '@data_definitions.registry.cleaner'
+        persister: '@data_definitions.registry.persister'
+        interpreter: '@data_definitions.registry.interpreter'
+        setter: '@data_definitions.registry.setter'
+        fetcher: '@data_definitions.registry.fetcher'
+        export_provider: '@data_definitions.registry.export_provider'
+        export_runner: '@data_definitions.registry.export_runner'
+        getter: '@data_definitions.registry.getter'
+      - '@event_dispatcher'
+
+  Instride\Bundle\DataDefinitionsBundle\Logging\RunLogHandler:
+    arguments:
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunTracker'
+      - '%data_definitions.runs.log_level%'
+
+  Instride\Bundle\DataDefinitionsBundle\EventListener\RunTrackingSubscriber:
+    arguments:
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunTracker'
+    tags:
+      - { name: kernel.event_subscriber }
+
+  Instride\Bundle\DataDefinitionsBundle\Messenger\ExecuteRunMessageHandler:
+    arguments:
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunManager'
+    tags:
+      - { name: messenger.message_handler }
+
+  Instride\Bundle\DataDefinitionsBundle\Maintenance\RunCleanupTask:
+    arguments:
+      - '@Instride\Bundle\DataDefinitionsBundle\Run\RunRepository'
+      - '%data_definitions.runs.retention_days%'
+    tags:
+      - { name: pimcore.maintenance.task, type: data_definitions_run_cleanup }
+
+  Instride\Bundle\DataDefinitionsBundle\Controller\RunController:
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags:
+      - { name: controller.service_arguments }
