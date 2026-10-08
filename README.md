@@ -1,4 +1,4 @@
-![DataDefinitions](docs/images/github_banner.png "Data Definitions")
+[![CORS - One system. Down to the Core.](https://raw.githubusercontent.com/cors-gmbh/.github/refs/heads/main/cors-banner.jpg)](https://cors.gmbh)
 
 Data Definitions allows you to define your DataObject Imports and Exports using a nice GUI and re-run the definitions
 as often you like. Everything within Data Definitions is extendable.
